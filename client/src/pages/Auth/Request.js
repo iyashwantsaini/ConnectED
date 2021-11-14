@@ -10,8 +10,8 @@ import UserInfoIcon from "@rsuite/icons/UserInfo";
 import UserBadgeIcon from "@rsuite/icons/UserBadge";
 import ImageIcon from "@rsuite/icons/Image";
 import GrowthIcon from "@rsuite/icons/Growth";
-import BranchIcon from '@rsuite/icons/Branch';
-import { NavLink } from "react-router-dom";
+import BranchIcon from "@rsuite/icons/Branch";
+import { Link } from "react-router-dom";
 
 const Request = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -130,16 +130,16 @@ const Request = () => {
                 appearance="primary"
                 className={styles.Login_btn}
               >
-                Request Access 
+                Request Access
               </Button>
             </div>
           </form>
           <br />
           <p class={`${styles.text__left}`}>
-            Have Access ? <a href="/">Login</a>
+            Have Access ? <Link to="/login">Login</Link>
           </p>
-          <br/>
-          <br/>
+          <br />
+          <br />
         </div>
       </div>
     </React.Fragment>

@@ -6,11 +6,37 @@ import TagLockIcon from "@rsuite/icons/TagLock";
 import ThaparIcon from "./images/thapar_icon.jpg";
 import PageNextIcon from "@rsuite/icons/PageNext";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
-const Login = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../store/userSlice";
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
+  USER_REGISTER_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+} from "../../constants/userConstants";
+
+const Login = (props) => {
+  const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userSlice);
+  const { userInfo, loading, error } = userData;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/home");
+    }
+  }, [navigate, userInfo]);
+
   const [user, setUser] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChangeEmail = (e) => {
@@ -27,6 +53,49 @@ const Login = () => {
     });
   };
 
+  const handleSubmission = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(userActions.userLogin({ type: USER_LOGIN_REQUEST }));
+      const { email, password } = user;
+      if (email && password) {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+
+        const { data } = await axios.post(
+          "http://localhost:5000/api/user/login",
+          { email, password },
+          config
+        );
+
+        dispatch(
+          userActions.userLogin({
+            type: USER_LOGIN_SUCCESS,
+            payload: data,
+          })
+        );
+
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        navigate("/home");
+      } else {
+        setMessage("Incorrect Inputs!");
+      }
+    } catch (error) {
+      dispatch(
+        userActions.userLogin({
+          type: USER_LOGIN_FAIL,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -36,7 +105,10 @@ const Login = () => {
       <div class={`${styles.align}`}>
         <div class={`${styles.grid}`}>
           <img src={ThaparIcon} alt="Icon" className={styles.college_icon} />
-          <form class={`${styles.form} ${styles.login}`}>
+          <form
+            onSubmit={handleSubmission}
+            class={`${styles.form} ${styles.login}`}
+          >
             <div class={styles.form__field}>
               <label for={styles.login__username}>
                 <EmailIcon />
@@ -71,7 +143,7 @@ const Login = () => {
                 color="blue"
                 appearance="primary"
                 className={styles.Login_btn}
-                // type="submit"
+                type="submit"
               >
                 Login
               </Button>
@@ -79,9 +151,7 @@ const Login = () => {
           </form>
           <br />
           <p class={`${styles.text__left}`}>
-            Have Access ? <a to="/">Setup Account</a>
-            <br />
-            New Member ? <a to="/">Request Access</a>
+            New Member ? <Link to="/request">Request Access</Link>
           </p>
         </div>
       </div>

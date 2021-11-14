@@ -6,8 +6,34 @@ import TagLockIcon from "@rsuite/icons/TagLock";
 import ThaparIcon from "./images/thapar_icon.jpg";
 import PageNextIcon from "@rsuite/icons/PageNext";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../store/userSlice";
+import {
+  USER_LOGIN_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
+  USER_REGISTER_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+} from "../../constants/userConstants";
 
 const Register = () => {
+  const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userSlice);
+  const { userInfo, loading, error } = userData;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/home");
+    }
+  }, [navigate, userInfo]);
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -33,6 +59,55 @@ const Register = () => {
     });
   };
 
+  const handleSubmission = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(userActions.userRegister({ type: USER_REGISTER_REQUEST }));
+      const { email, password, repassword } = user;
+      if (email && password && repassword && password === repassword) {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+
+        const { data } = await axios.post(
+          "http://localhost:5000/api/user/register",
+          { email, password },
+          config
+        );
+
+        dispatch(
+          userActions.userRegister({
+            type: USER_REGISTER_SUCCESS,
+            payload: data,
+          })
+        );
+        dispatch(
+          userActions.userLogin({
+            type: USER_LOGIN_SUCCESS,
+            payload: data,
+          })
+        );
+
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        navigate("/home");
+      } else {
+        setMessage("Incorrect Inputs!");
+      }
+    } catch (error) {
+      dispatch(
+        userActions.userRegister({
+          type: USER_REGISTER_FAIL,
+          payload:
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message,
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -42,7 +117,10 @@ const Register = () => {
       <div class={`${styles.align}`}>
         <div class={`${styles.grid}`}>
           <img src={ThaparIcon} alt="Icon" className={styles.college_icon} />
-          <form class={`${styles.form} ${styles.login}`}>
+          <form
+            onSubmit={handleSubmission}
+            class={`${styles.form} ${styles.login}`}
+          >
             <div class={styles.form__field}>
               <label for={styles.login__username}>
                 <EmailIcon />
@@ -91,18 +169,14 @@ const Register = () => {
                 color="blue"
                 appearance="primary"
                 className={styles.Login_btn}
-                // type="submit"
+                type="submit"
+                // onClick={handleSubmission}
               >
                 Register
               </Button>
             </div>
           </form>
           <br />
-          <p class={`${styles.text__left}`}>
-            Have Access ? <a>Login</a>
-            <br />
-            New Member ? <a>Request Access</a>
-          </p>
         </div>
       </div>
     </React.Fragment>
