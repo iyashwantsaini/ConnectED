@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Login.module.css";
-import { Button, IconButton, Form, Input, Nav } from "rsuite";
+import { Button, IconButton, Form, Input, Nav, Message } from "rsuite";
 import EmailIcon from "@rsuite/icons/Email";
 import TagLockIcon from "@rsuite/icons/TagLock";
 import ThaparIcon from "./images/thapar_icon.jpg";
@@ -8,6 +8,9 @@ import PageNextIcon from "@rsuite/icons/PageNext";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+//add loader
+//add messages
 
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/userSlice";
@@ -177,6 +180,9 @@ const Register = () => {
             </div>
           </form>
           <br />
+          <Message showIcon type="error">
+            Error
+          </Message>
         </div>
       </div>
     </React.Fragment>
