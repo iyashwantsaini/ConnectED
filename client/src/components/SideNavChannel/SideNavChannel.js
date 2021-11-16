@@ -1,28 +1,41 @@
 import React from "react";
 import { Sidenav, Nav, Dropdown } from "rsuite";
+import styles from "./SideNavChannel.module.css";
+import DashboardIcon from "@rsuite/icons/Dashboard";
+import ScatterIcon from "@rsuite/icons/Scatter";
+import WavePointIcon from "@rsuite/icons/WavePoint";
 
 const SideNavChannel = () => {
   return (
     <React.Fragment>
-      <Sidenav defaultOpenKeys={["3", "4"]} activeKey="1">
+      <Sidenav
+        defaultOpenKeys={["3", "4"]}
+        activeKey="1"
+        style={{ height: "100%" }}
+      >
         <Sidenav.Body>
-          <Nav>
-            <Nav.Item eventKey="1">Dashboard</Nav.Item>
-            <Nav.Item eventKey="2">User Group</Nav.Item>
-            <Dropdown eventKey="3" title="Advanced">
-              <Dropdown.Item eventKey="3-1">Geo</Dropdown.Item>
-              <Dropdown.Item eventKey="3-2">Devices</Dropdown.Item>
-              <Dropdown.Item eventKey="3-3">Loyalty</Dropdown.Item>
-              <Dropdown.Item eventKey="3-4">Visit Depth</Dropdown.Item>
+          <Nav style={{ paddingTop: 10 }}>
+            <Nav.Item
+              eventKey="1"
+              className={styles.channelListHead}
+              icon={<DashboardIcon />}
+            >
+              ConnectED
+            </Nav.Item>
+            <Dropdown eventKey="3" title="Channels" icon={<ScatterIcon />}>
+              <Dropdown.Item eventKey="3-1"># Events</Dropdown.Item>
+              <Dropdown.Item eventKey="3-2"># Hackathons</Dropdown.Item>
+              <Dropdown.Item eventKey="3-3"># Placements</Dropdown.Item>
+              <Dropdown.Item eventKey="3-4"># Internships</Dropdown.Item>
             </Dropdown>
-            <Dropdown eventKey="4" title="Settings">
-              <Dropdown.Item eventKey="4-1">Applications</Dropdown.Item>
-              <Dropdown.Item eventKey="4-2">Channels</Dropdown.Item>
-              <Dropdown.Item eventKey="4-3">Versions</Dropdown.Item>
-              <Dropdown.Menu eventKey="4-5" title="Custom Action">
-                <Dropdown.Item eventKey="4-5-1">Action Name</Dropdown.Item>
-                <Dropdown.Item eventKey="4-5-2">Action Params</Dropdown.Item>
-              </Dropdown.Menu>
+            <Dropdown
+              eventKey="4"
+              title="Direct Messages"
+              icon={<WavePointIcon />}
+            >
+              <Dropdown.Item eventKey="4-1"># Friend1</Dropdown.Item>
+              <Dropdown.Item eventKey="4-2"># Friend2</Dropdown.Item>
+              <Dropdown.Item eventKey="4-3"># Friend3</Dropdown.Item>
             </Dropdown>
           </Nav>
         </Sidenav.Body>

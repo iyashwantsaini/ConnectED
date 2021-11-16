@@ -16,8 +16,7 @@ const CustomNav = ({ active, onSelect, ...props }) => {
       vertical
       activeKey={active}
       onSelect={onSelect}
-      // style={{paddingRight:20}}
-      // style={{ width: 50, display: "flex", flexDirection: "column" }}
+      style={{ height: "100%" }}
     >
       <Nav.Item
         className={styles.iconsShell}

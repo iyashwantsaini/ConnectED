@@ -13,21 +13,27 @@ const Home = () => {
 
   return (
     <React.Fragment>
-      <Grid fluid className={styles.gridformat} >
-        <Row >
-          <Col xs={0.5} className={styles.sidemain}>
+      <Grid fluid className={styles.heightExpand}>
+        <Row className={styles.heightExpand}>
+          <Col xs={0.5} className={`${styles.sidemain} ${styles.heightExpand}`}>
             <SideNavMain />
           </Col>
-          <Col xs={3} className={styles.channels}>
+          <Col xs={3} className={`${styles.channels} ${styles.heightExpand}`}>
             <SideNavChannel />
           </Col>
-          <Col xs={25} className={styles.connectionMain}>
+          <Col
+            xs={25}
+            className={`${styles.connectionMain} ${styles.heightExpand}`}
+          >
             <Row>
               <TopNav />
             </Row>
             <Row>Content</Row>
           </Col>
-          <Col xs={3} className={styles.infoChannel}></Col>
+          <Col
+            xs={3}
+            className={`${styles.infoChannel} ${styles.heightExpand}`}
+          ></Col>
         </Row>
       </Grid>
     </React.Fragment>
