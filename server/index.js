@@ -7,7 +7,7 @@ require("dotenv").config();
 
 //importing custom routes
 var userRoutes = require("./routes/userRoutes.js");
-// import chatRoutes from "./routes/chatRoutes.js";
+var textRoutes = require("./routes/textRoutes.js");
 
 //error handling imports
 var { errorHandler, notFound } = require("./middleware/errorMiddleware.js");
@@ -23,6 +23,7 @@ connectDB();
 //using custom routes
 // app.use("/api/chat", chatRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/text", textRoutes);
 
 //handling deployment
 const dirname = path.resolve();
