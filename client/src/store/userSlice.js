@@ -18,17 +18,17 @@ const userSlice = createSlice({
   },
   reducers: {
     userLogin(state, action) {
-      switch (action.type) {
+      switch (action.payload.type) {
         case USER_LOGIN_REQUEST:
           state.loading = true;
           break;
         case USER_LOGIN_SUCCESS:
           state.loading = false;
-          state.userInfo = action.payload;
+          state.userInfo = action.payload.payload;
           break;
         case USER_LOGIN_FAIL:
           state.loading = false;
-          state.error = action.payload;
+          state.error = action.payload.payload;
           break;
         case USER_LOGOUT:
           state.userInfo = null;
@@ -40,17 +40,17 @@ const userSlice = createSlice({
       }
     },
     userRegister(state, action) {
-      switch (action.type) {
+      switch (action.payload.type) {
         case USER_REGISTER_REQUEST:
           state.loading = true;
           break;
         case USER_REGISTER_SUCCESS:
           state.loading = false;
-          state.userInfo = action.payload;
+          state.userInfo = action.payload.payload;
           break;
         case USER_REGISTER_FAIL:
           state.loading = false;
-          state.error = action.payload;
+          state.error = action.payload.payload;
           break;
         default:
           state.loading = false;

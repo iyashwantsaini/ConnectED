@@ -1,22 +1,32 @@
+import { CustomProvider } from "rsuite";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./App.css";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Request from "./pages/Auth/Request";
 import Home from "./pages/App/Home";
+import { userActions } from "./store/userSlice";
+import { USER_LOGIN_SUCCESS } from "./constants/userConstants";
 import "rsuite/dist/rsuite.min.css";
-import { CustomProvider } from "rsuite";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { useState } from "react";
 
-function App() {
-  const [user, setUser] = useState({});
-  const loginUserHandler = () => {
-    console.log("saving user handler triggered");
-    setUser({
-      email: "yashsn2127@gmail.com",
-      password: "weyucvyuiwec",
-    });
-  };
+const App = () => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userSlice.userInfo);
+
+  useEffect(() => {
+    const userInfoStorage = localStorage.getItem("userInfo");
+    if (userInfoStorage) {
+      dispatch(
+        userActions.userLogin({
+          type: USER_LOGIN_SUCCESS,
+          payload: userInfoStorage,
+        })
+      );
+    }
+  }, [dispatch]);
 
   return (
     <CustomProvider theme="dark">
@@ -25,21 +35,20 @@ function App() {
           <Route
             exact
             path="/"
-            element={
-              user ? <Home /> : <Login loginUserHandler={loginUserHandler} />
-            }
+            element={userInfo ? <Home /> : <Login />}
           ></Route>
           <Route
-            path="/login"
-            element={<Login loginUserHandler={loginUserHandler} />}
+            path="/register"
+            element={userInfo ? <Home /> : <Register />}
           ></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/request" element={<Request />}></Route>
-          <Route path="/home" element={<Home />}></Route>
+          <Route
+            path="/request"
+            element={userInfo ? <Home /> : <Request />}
+          ></Route>
         </Routes>
       </Router>
     </CustomProvider>
   );
-}
+};
 
 export default App;
