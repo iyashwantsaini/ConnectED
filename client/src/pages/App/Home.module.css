@@ -1,8 +1,11 @@
 .gridformat {
-  /* width: 100%; */
   height: 100%;
 }
 
 .heightExpand {
   height: 100%;
+}
+
+.heightExpandChats{
+  height: 94%;
 }
