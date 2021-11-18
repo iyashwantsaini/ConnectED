@@ -17,7 +17,7 @@ const TextChat = () => {
   return (
     <React.Fragment>
       <Chat client={client} theme="team dark">
-        <Col lg={3} className={`${styles.channels} ${styles.heightExpand}`}>
+        <Col lg={4} className={`${styles.channels} ${styles.heightExpand}`}>
           <SideNavChannel />
         </Col>
         {/* <Col
@@ -32,9 +32,9 @@ const TextChat = () => {
           </Row>
         </Col> */}
       </Chat>
-      <Col lg={3} className={`${styles.infoChannel} ${styles.heightExpand}`}>
+      {/* <Col lg={3} className={`${styles.infoChannel} ${styles.heightExpand}`}>
         <RightBar />
-      </Col>
+      </Col> */}
     </React.Fragment>
   );
 };

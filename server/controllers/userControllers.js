@@ -2,13 +2,24 @@ var asyncHandler = require("express-async-handler");
 var User = require("../models/userModel.js");
 var generateToken = require("../utils/generateToken.js");
 
+const { connect } = require("getstream");
+const StreamChat = require("stream-chat").StreamChat;
+require("dotenv").config();
+const api_key = process.env.STREAM_API_KEY;
+const api_secret = process.env.STREAM_API_SECRET;
+const app_id = process.env.STREAM_APP_ID;
+
 //@description     Auth the user
 //@route           POST /api/users/login
 //@access          Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
+  const serverClient = connect(api_key, api_secret, app_id);
+  const client = StreamChat.getInstance(api_key, api_secret);
   const user = await User.findOne({ email });
+
+  const { users } = await client.queryUsers({ email: email });
+  const stream_token = serverClient.createUserToken(users[0].id);
 
   if (user && (await user.matchPassword(password))) {
     res.json({
@@ -18,6 +29,7 @@ const authUser = asyncHandler(async (req, res) => {
       // isAdmin: user.isAdmin,
       // pic: user.pic,
       token: generateToken(user._id),
+      stream_token: stream_token,
     });
   } else {
     res.status(401);
@@ -29,7 +41,8 @@ const authUser = asyncHandler(async (req, res) => {
 //@route           POST /api/users/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
+  const { email, password } = req.body;
+  const serverClient = connect(api_key, api_secret, app_id);
 
   const userExists = await User.findOne({ email });
 
@@ -46,6 +59,8 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
+    const stream_token = serverClient.createUserToken(user._id);
+
     res.status(201).json({
       _id: user._id,
       // name: user.name,
@@ -53,6 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
       // isAdmin: user.isAdmin,
       // pic: user.pic,
       token: generateToken(user._id),
+      stream_token: stream_token,
     });
   } else {
     res.status(400);

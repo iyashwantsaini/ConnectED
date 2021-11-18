@@ -236,7 +236,7 @@ const SideNavChannel = () => {
         </Sidenav.Body>
       </Sidenav>
 
-      <div>
+      <>
         <Modal open={newChannelOpen} onClose={handleNewChannelClose} size="xs">
           <Modal.Header>
             <Modal.Title>New Channel</Modal.Title>
@@ -277,7 +277,7 @@ const SideNavChannel = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-      </div>
+      </>
     </React.Fragment>
   );
 };
