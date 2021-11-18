@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
+  ChannelList,
+  useChatContext,
+  ChannelSearch,
+  ThemeChannelList,
+  ThemeChannelPreview,
+} from "stream-chat-react";
+import Cookies from "universal-cookie";
+import {
   Sidenav,
   Nav,
   Dropdown,
@@ -8,12 +16,20 @@ import {
   Button,
   Input,
   Form,
+  InputGroup,
+  Row,
+  Col,
 } from "rsuite";
+
 import styles from "./SideNavChannel.module.css";
 import DashboardIcon from "@rsuite/icons/Dashboard";
 import ScatterIcon from "@rsuite/icons/Scatter";
 import WavePointIcon from "@rsuite/icons/WavePoint";
+import Search from "@rsuite/icons/Search";
 import axios from "axios";
+import ChannelListCustom from "./ChannelListCustom/ChannelListCustom";
+// import ChannelChat from "../ChannelChat/ChannelChat";
+import ChannelListPreview from "./ChannelListPreview/ChannelListPreview";
 
 const Textarea = React.forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
@@ -26,6 +42,7 @@ const SideNavChannel = () => {
     channelDescription: "",
   });
   const [channels, setChannels] = useState([]);
+  const [channelSearchTerm, setChannelSearchTerm] = useState("");
 
   // useEffect(() => {
   //   console.log(channels);
@@ -103,18 +120,28 @@ const SideNavChannel = () => {
     setNewChannelOpen(true);
   };
   const channelNameChangeHandler = (e) => {
-    // console.log(e);
     setChannelFormValue({
       ...channelFormValue,
       channelName: e.target.value,
     });
   };
   const channelDescChangeHandler = (e) => {
-    // console.log(e);
     setChannelFormValue({
       ...channelFormValue,
       channelDescription: e.target.value,
     });
+  };
+  const channelSearchInputHandler = (e) => {
+    setChannelSearchTerm(e);
+  };
+
+  const channelSearchHandler = async () => {
+    try {
+      //fetch channels
+    } catch (err) {
+      //error handling
+      setChannelSearchTerm("");
+    }
   };
 
   // useEffect(() => {
@@ -139,16 +166,47 @@ const SideNavChannel = () => {
             </Nav.Item>
             <Dropdown eventKey="3" title="Channels" icon={<ScatterIcon />}>
               <Dropdown.Item eventKey="3-1">
-                <Button onClick={handleNewChannelOpen}>Add Channel</Button>
+                <Row>
+                  <Col>
+                    <InputGroup
+                      style={{ width: 100 }}
+                      className={styles.searchButton}
+                    >
+                      <Input onChange={channelSearchInputHandler} />
+                      <InputGroup.Button onClick={channelSearchHandler}>
+                        <Search />
+                      </InputGroup.Button>
+                    </InputGroup>
+                  </Col>
+                  <Col>
+                    <Button
+                      className={styles.addButton}
+                      onClick={handleNewChannelOpen}
+                    >
+                      +
+                    </Button>
+                  </Col>
+                </Row>
               </Dropdown.Item>
 
-              {channels.map((item, i) => {
+              <ChannelList
+                filters={{}}
+                channelRenderFilterFn={() => {}}
+                List={(listProps) => (
+                  <ChannelListCustom {...listProps} type="team" />
+                )}
+                Preview={(previewProps) => {
+                  <ChannelListPreview {...previewProps} type="team" />;
+                }}
+              />
+
+              {/* {channels.map((item, i) => {
                 return (
                   <Dropdown.Item eventKey={item._id} key={i}>
                     # {item.channelName}
                   </Dropdown.Item>
                 );
-              })}
+              })} */}
 
               {/* <Dropdown.Item eventKey="3-2"># Hackathons</Dropdown.Item> */}
               {/* <Dropdown.Item eventKey="3-3"># Placements</Dropdown.Item> */}
@@ -159,9 +217,20 @@ const SideNavChannel = () => {
               title="Direct Messages"
               icon={<WavePointIcon />}
             >
-              <Dropdown.Item eventKey="4-1"># Friend1</Dropdown.Item>
+              <ChannelList
+                filters={{}}
+                channelRenderFilterFn={() => {}}
+                List={(listProps) => (
+                  <ChannelListCustom {...listProps} type="messaging" />
+                )}
+                Preview={(previewProps) => {
+                  <ChannelListPreview {...previewProps} type="messaging" />;
+                }}
+              />
+
+              {/* <Dropdown.Item eventKey="4-1"># Friend1</Dropdown.Item>
               <Dropdown.Item eventKey="4-2"># Friend2</Dropdown.Item>
-              <Dropdown.Item eventKey="4-3"># Friend3</Dropdown.Item>
+              <Dropdown.Item eventKey="4-3"># Friend3</Dropdown.Item> */}
             </Dropdown>
           </Nav>
         </Sidenav.Body>

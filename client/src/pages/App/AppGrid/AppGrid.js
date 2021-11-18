@@ -5,11 +5,6 @@ import styles from "./AppGrid.module.css";
 import TextChat from "../TextChat/TextChat";
 
 const AppGrid = () => {
-  // export const logout = () => async (dispatch) => {
-  //     localStorage.removeItem("userInfo");
-  //     dispatch({ type: USER_LOGOUT });
-  //   };
-
   return (
     <React.Fragment>
       <Grid fluid className={styles.heightExpand}>
@@ -17,6 +12,7 @@ const AppGrid = () => {
           <Col lg={0.5} className={`${styles.sidemain} ${styles.heightExpand}`}>
             <SideNavMain />
           </Col>
+          {/* rendered according to selected in side nav main */}
           <TextChat />
         </Row>
       </Grid>

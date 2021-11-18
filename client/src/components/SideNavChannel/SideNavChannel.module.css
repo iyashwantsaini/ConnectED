@@ -2,3 +2,12 @@
   pointer-events: none;
   padding-bottom: 5px;
 }
+
+.addButton {
+  /* width: 20px; */
+  /* height: 30px;  */
+}
+
+.searchButton{
+  width: 10px;
+}

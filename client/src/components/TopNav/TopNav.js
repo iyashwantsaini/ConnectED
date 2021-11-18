@@ -3,13 +3,16 @@ import styles from "./TopNav.module.css";
 import { Navbar, Nav, Dropdown } from "rsuite";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HomeIcon from "@mui/icons-material/Home";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_LOGOUT } from "../../constants/userConstants";
 
 const NavBarInstance = ({ onSelect, activeKey, ...props }) => {
+  const dispatch = useDispatch();
+
   const logoutHandler = (e) => {
-    console.log(activeKey);
-    //logout here
-    //remove from storage
-    //update state
+    localStorage.removeItem("userInfo");
+    dispatch({ type: USER_LOGOUT });
   };
 
   return (
