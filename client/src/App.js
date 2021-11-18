@@ -7,7 +7,7 @@ import "./App.css";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Request from "./pages/Auth/Request";
-import Home from "./pages/App/Home";
+import AppGrid from "./pages/App/AppGrid/AppGrid";
 import { userActions } from "./store/userSlice";
 import { USER_LOGIN_SUCCESS } from "./constants/userConstants";
 import "rsuite/dist/rsuite.min.css";
@@ -35,15 +35,20 @@ const App = () => {
           <Route
             exact
             path="/"
-            element={userInfo ? <Home /> : <Login />}
+            element={userInfo ? <AppGrid /> : <Login />}
+          ></Route>
+          <Route
+            exact
+            path="/home"
+            element={userInfo ? <AppGrid /> : <Login />}
           ></Route>
           <Route
             path="/register"
-            element={userInfo ? <Home /> : <Register />}
+            element={userInfo ? <AppGrid /> : <Register />}
           ></Route>
           <Route
             path="/request"
-            element={userInfo ? <Home /> : <Request />}
+            element={userInfo ? <AppGrid /> : <Request />}
           ></Route>
         </Routes>
       </Router>

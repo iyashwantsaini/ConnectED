@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./SideNavMain.module.css";
 import { Nav } from "rsuite";
 import Profile from "../../pages/App/Profile/Profile";
-import Home from "../../pages/App/Home";
+import AppGrid from "../../pages/App/AppGrid/AppGrid";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InfoIcon from "@mui/icons-material/Info";
