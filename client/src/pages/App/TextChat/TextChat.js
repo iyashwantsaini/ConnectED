@@ -7,8 +7,9 @@ import Cookies from "universal-cookie";
 import SideNavChannel from "../../../components/SideNavChannel/SideNavChannel";
 import TopNav from "../../../components/TopNav/TopNav";
 import RightBar from "../../../components/RightBar/RightBar";
-import ChannelChat from "../../../components/ChannelChat/ChannelChat";
+// import ChannelChat from "../../../components/ChannelChat/ChannelChat";
 import styles from "./TextChat.module.css";
+import ChannelContainer from "../../../components/ChannelContainer/ChannelContainer";
 
 const apiKey = "ghaebtv2akna";
 const client = StreamChat.getInstance(apiKey);
@@ -43,7 +44,8 @@ const TextChat = () => {
             <TopNav />
           </Row>
           <Row className={styles.heightExpandChats}>
-            <ChannelChat />
+            {/* <ChannelChat /> */}
+            <ChannelContainer />
           </Row>
         </Col>
       </Chat>

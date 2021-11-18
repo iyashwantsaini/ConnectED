@@ -6,7 +6,6 @@ import {
   ThemeChannelList,
   ThemeChannelPreview,
 } from "stream-chat-react";
-import Cookies from "universal-cookie";
 import {
   Sidenav,
   Nav,
@@ -26,26 +25,19 @@ import DashboardIcon from "@rsuite/icons/Dashboard";
 import ScatterIcon from "@rsuite/icons/Scatter";
 import WavePointIcon from "@rsuite/icons/WavePoint";
 import Search from "@rsuite/icons/Search";
-import axios from "axios";
 import ChannelListCustom from "./ChannelListCustom/ChannelListCustom";
-// import ChannelChat from "../ChannelChat/ChannelChat";
 import ChannelListPreview from "./ChannelListPreview/ChannelListPreview";
-
-const Textarea = React.forwardRef((props, ref) => (
-  <Input {...props} as="textarea" ref={ref} />
-));
+import ChannelCreateEdit from "./ChannelCreateEdit/ChannelCreateEdit";
 
 const customChannelTeamFilter = (channels) => {
-  return channels.filter((channel) => channel.type === 'team');
-}
+  return channels.filter((channel) => channel.type === "team");
+};
 
 const customChannelMessagingFilter = (channels) => {
-  return channels.filter((channel) => channel.type === 'messaging');
-}
+  return channels.filter((channel) => channel.type === "messaging");
+};
 
 const SideNavChannel = () => {
-  const { client } = useChatContext();
-
   const [newChannelOpen, setNewChannelOpen] = useState(false);
   const [channelFormValue, setChannelFormValue] = useState({
     channelName: "",
@@ -53,31 +45,21 @@ const SideNavChannel = () => {
   });
   const [channels, setChannels] = useState([]);
   const [channelSearchTerm, setChannelSearchTerm] = useState("");
+  const [channelType, setChannelType] = useState("team");
+
+  const { client, setActiveChannel } = useChatContext();
+  const [selectedUsers, setSelectedUsers] = useState([client.userID || ""]);
 
   const filters = { members: { $in: [client.userID] } };
 
-  // useEffect(() => {
-  //   console.log(channels);
-  // }, [channels]);
-
-  // useEffect(() => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //     };
-  //     const { data } = axios
-  //       .get("http://localhost:5000/api/text/channel", config)
-  //       .then((result) => {
-  //         // console.log(result.data.result);
-  //         setChannels([...result.data.result]);
-  //       });
-  //   } catch (error) {
-  //     //show error msg
-  //     console.log(error);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      //fetch channels
+    } catch (error) {
+      //show error msg
+      console.log(error);
+    }
+  }, []);
 
   const handleNewChannelClose = () => {
     setNewChannelOpen(false);
@@ -86,16 +68,18 @@ const SideNavChannel = () => {
     try {
       const { channelName, channelDescription } = channelFormValue;
       if (channelName && channelDescription) {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        const { data } = await axios.post(
-          "http://localhost:5000/api/text/channel",
-          { channelName, channelDescription },
-          config
-        );
+        try {
+          const newChannel = await client.channel(channelType, channelName, {
+            name: channelName,
+            description: channelDescription,
+            members: selectedUsers,
+          });
+          await newChannel.watch();
+          setSelectedUsers([client.userID]);
+          setActiveChannel(newChannel);
+        } catch (error) {
+          console.log(error);
+        }
 
         setNewChannelOpen(false);
 
@@ -105,22 +89,6 @@ const SideNavChannel = () => {
         });
 
         //rerender the channels
-        try {
-          const config = {
-            headers: {
-              "Content-type": "application/json",
-            },
-          };
-          const { data } = axios
-            .get("http://localhost:5000/api/text/channel", config)
-            .then((result) => {
-              // console.log(result.data.result);
-              setChannels([...result.data.result]);
-            });
-        } catch (error) {
-          //show error msg
-          console.log(error);
-        }
       } else {
         //show error message
       }
@@ -128,8 +96,13 @@ const SideNavChannel = () => {
       //show error msg
     }
   };
-  const handleNewChannelOpen = () => {
+  const handleNewChannelOpenDirect = () => {
     setNewChannelOpen(true);
+    setChannelType("messaging");
+  };
+  const handleNewChannelOpenTeam = () => {
+    setNewChannelOpen(true);
+    setChannelType("team");
   };
   const channelNameChangeHandler = (e) => {
     setChannelFormValue({
@@ -146,7 +119,6 @@ const SideNavChannel = () => {
   const channelSearchInputHandler = (e) => {
     setChannelSearchTerm(e);
   };
-
   const channelSearchHandler = async () => {
     try {
       //fetch channels
@@ -177,7 +149,7 @@ const SideNavChannel = () => {
                 <Row>
                   <Col>
                     <InputGroup
-                      style={{ width: 100 }}
+                      style={{ width: 180 }}
                       className={styles.searchButton}
                     >
                       <Input onChange={channelSearchInputHandler} />
@@ -189,7 +161,47 @@ const SideNavChannel = () => {
                   <Col>
                     <Button
                       className={styles.addButton}
-                      onClick={handleNewChannelOpen}
+                      onClick={handleNewChannelOpenTeam}
+                    >
+                      +
+                    </Button>
+                  </Col>
+                </Row>
+              </Dropdown.Item>
+              <ChannelList
+                filters={filters}
+                channelRenderFilterFn={customChannelTeamFilter}
+                List={(listProps) => (
+                  <ChannelListCustom {...listProps} type="team" />
+                )}
+                Preview={(previewProps) => (
+                  <ChannelListPreview {...previewProps} type="team" />
+                )}
+              />
+            </Dropdown>
+
+            <Dropdown
+              eventKey="4"
+              title="Direct Messages"
+              icon={<WavePointIcon />}
+            >
+              <Dropdown.Item eventKey="4-1">
+                <Row>
+                  <Col>
+                    <InputGroup
+                      style={{ width: 180 }}
+                      className={styles.searchButton}
+                    >
+                      <Input onChange={channelSearchInputHandler} />
+                      <InputGroup.Button onClick={channelSearchHandler}>
+                        <Search />
+                      </InputGroup.Button>
+                    </InputGroup>
+                  </Col>
+                  <Col>
+                    <Button
+                      className={styles.addButton}
+                      onClick={handleNewChannelOpenDirect}
                     >
                       +
                     </Button>
@@ -198,78 +210,30 @@ const SideNavChannel = () => {
               </Dropdown.Item>
 
               <ChannelList
-                filters={{}}
-                channelRenderFilterFn={() => {}}
-                List={(listProps) => (
-                  <ChannelListCustom {...listProps} type="team" />
-                )}
-                Preview={(previewProps) => {
-                  <ChannelListPreview {...previewProps} type="team" />;
-                }}
-              />
-            </Dropdown>
-            <Dropdown
-              eventKey="4"
-              title="Direct Messages"
-              icon={<WavePointIcon />}
-            >
-              <ChannelList
-                filters={{}}
-                channelRenderFilterFn={() => {}}
+                filters={filters}
+                channelRenderFilterFn={customChannelMessagingFilter}
                 List={(listProps) => (
                   <ChannelListCustom {...listProps} type="messaging" />
                 )}
-                Preview={(previewProps) => {
-                  <ChannelListPreview {...previewProps} type="messaging" />;
-                }}
+                Preview={(previewProps) => (
+                  <ChannelListPreview {...previewProps} type="messaging" />
+                )}
               />
             </Dropdown>
+            <ChannelCreateEdit
+              handleNewChannelClose={handleNewChannelClose}
+              handleNewChannelSubmission={handleNewChannelSubmission}
+              channelNameChangeHandler={channelNameChangeHandler}
+              channelDescChangeHandler={channelDescChangeHandler}
+              channelSearchInputHandler={channelSearchInputHandler}
+              channelSearchHandler={channelSearchHandler}
+              newChannelOpen={newChannelOpen}
+              channelFormValue={channelFormValue}
+              setSelectedUsers={setSelectedUsers}
+            />
           </Nav>
         </Sidenav.Body>
       </Sidenav>
-
-      <>
-        <Modal open={newChannelOpen} onClose={handleNewChannelClose} size="xs">
-          <Modal.Header>
-            <Modal.Title>New Channel</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form
-              fluid
-              onChange={setChannelFormValue}
-              formValue={channelFormValue}
-            >
-              <Form.Group
-                controlId="name-9"
-                onChange={channelNameChangeHandler}
-              >
-                <Form.ControlLabel>Channel Name</Form.ControlLabel>
-                <Form.Control name="channelname" />
-                <Form.HelpText>Required</Form.HelpText>
-              </Form.Group>
-              <Form.Group
-                controlId="textarea-9"
-                onChange={channelDescChangeHandler}
-              >
-                <Form.ControlLabel>Channel Description</Form.ControlLabel>
-                <Form.Control
-                  rows={5}
-                  name="channeldescription"
-                  accepter={Textarea}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={handleNewChannelSubmission} appearance="primary">
-              Confirm
-            </Button>
-            <Button onClick={handleNewChannelClose} appearance="subtle">
-              Cancel
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
     </React.Fragment>
   );
 };

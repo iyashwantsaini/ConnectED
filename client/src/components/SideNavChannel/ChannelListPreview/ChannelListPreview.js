@@ -2,20 +2,17 @@ import React from "react";
 import { Avatar, useChatContext } from "stream-chat-react";
 import { Dropdown, Grid, Row, Col } from "rsuite";
 
-const ChannelListPreview = ({ channel, type }) => {
+const ChannelListPreview = ({ setActiveChannel, channel, type }) => {
   const { channel: activeChannel, client } = useChatContext();
 
-  const ChannelPreview = () => {
-    <Dropdown.Item
-      eventKey={activeChannel?.data?.id}
-      key={activeChannel?.data?.id}
-    >
-      # {activeChannel?.data?.name || activeChannel?.data?.id}
-    </Dropdown.Item>;
-  };
+  const ChannelPreview = () => (
+    <Dropdown.Item eventKey={channel?.data?.id} key={channel?.data?.id}>
+      # {channel?.data?.name || channel?.data?.id}
+    </Dropdown.Item>
+  );
 
   const DirectPreview = () => {
-    const members = Object.values(activeChannel.state.members).filter(
+    const members = Object.values(channel.state.members).filter(
       ({ user }) => user.id !== client.userID
     );
 
@@ -25,13 +22,14 @@ const ChannelListPreview = ({ channel, type }) => {
           <Row>
             <Col>
               <Avatar
-                image={members[0]?.user?.image}
-                name={members[0]?.user?.name}
+                // image={members[0]?.user?.image}
+                image="https://gravatar.com/avatar/c777d9456f53428a367078eb5c3c6b09?s=400&d=robohash&r=x"
+                name={members[0]?.user?.email}
                 size={24}
               />
             </Col>
             <Col>
-              <p>{members[0]?.user?.name}</p>
+              <p>{members[0]?.user?.email}</p>
             </Col>
           </Row>
         </Grid>
@@ -41,16 +39,10 @@ const ChannelListPreview = ({ channel, type }) => {
 
   return (
     <React.Fragment>
-      {/* {channels.map((item, i) => {
-                return (
-                  <Dropdown.Item eventKey={item._id} key={i}>
-                    # {item.channelName}
-                  </Dropdown.Item>
-                );
-              })} */}
       <div
         onClick={() => {
-          console.log(activeChannel);
+          console.log(channel);
+          setActiveChannel(channel);
         }}
       >
         {type === "team" ? <ChannelPreview /> : <DirectPreview />}
