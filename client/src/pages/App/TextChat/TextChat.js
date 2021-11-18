@@ -12,15 +12,30 @@ import styles from "./TextChat.module.css";
 
 const apiKey = "ghaebtv2akna";
 const client = StreamChat.getInstance(apiKey);
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+if (userInfo) {
+  const streamToken = userInfo.stream_token;
+  if (streamToken) {
+    client.connectUser(
+      {
+        id: userInfo._id,
+        email: userInfo.email,
+      },
+      streamToken
+    );
+  }
+}
 
 const TextChat = () => {
+  console.log(client);
+
   return (
     <React.Fragment>
       <Chat client={client} theme="team dark">
         <Col lg={4} className={`${styles.channels} ${styles.heightExpand}`}>
           <SideNavChannel />
         </Col>
-        {/* <Col
+        <Col
           lg={17}
           className={`${styles.connectionMain} ${styles.heightExpand}`}
         >
@@ -30,7 +45,7 @@ const TextChat = () => {
           <Row className={styles.heightExpandChats}>
             <ChannelChat />
           </Row>
-        </Col> */}
+        </Col>
       </Chat>
       {/* <Col lg={3} className={`${styles.infoChannel} ${styles.heightExpand}`}>
         <RightBar />

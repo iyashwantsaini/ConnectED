@@ -35,7 +35,17 @@ const Textarea = React.forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
 ));
 
+const customChannelTeamFilter = (channels) => {
+  return channels.filter((channel) => channel.type === 'team');
+}
+
+const customChannelMessagingFilter = (channels) => {
+  return channels.filter((channel) => channel.type === 'messaging');
+}
+
 const SideNavChannel = () => {
+  const { client } = useChatContext();
+
   const [newChannelOpen, setNewChannelOpen] = useState(false);
   const [channelFormValue, setChannelFormValue] = useState({
     channelName: "",
@@ -44,28 +54,30 @@ const SideNavChannel = () => {
   const [channels, setChannels] = useState([]);
   const [channelSearchTerm, setChannelSearchTerm] = useState("");
 
+  const filters = { members: { $in: [client.userID] } };
+
   // useEffect(() => {
   //   console.log(channels);
   // }, [channels]);
 
-  useEffect(() => {
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = axios
-        .get("http://localhost:5000/api/text/channel", config)
-        .then((result) => {
-          // console.log(result.data.result);
-          setChannels([...result.data.result]);
-        });
-    } catch (error) {
-      //show error msg
-      console.log(error);
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //     };
+  //     const { data } = axios
+  //       .get("http://localhost:5000/api/text/channel", config)
+  //       .then((result) => {
+  //         // console.log(result.data.result);
+  //         setChannels([...result.data.result]);
+  //       });
+  //   } catch (error) {
+  //     //show error msg
+  //     console.log(error);
+  //   }
+  // }, []);
 
   const handleNewChannelClose = () => {
     setNewChannelOpen(false);
@@ -144,10 +156,6 @@ const SideNavChannel = () => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(channelFormValue);
-  // }, [channelFormValue]);
-
   return (
     <React.Fragment>
       <Sidenav
@@ -199,18 +207,6 @@ const SideNavChannel = () => {
                   <ChannelListPreview {...previewProps} type="team" />;
                 }}
               />
-
-              {/* {channels.map((item, i) => {
-                return (
-                  <Dropdown.Item eventKey={item._id} key={i}>
-                    # {item.channelName}
-                  </Dropdown.Item>
-                );
-              })} */}
-
-              {/* <Dropdown.Item eventKey="3-2"># Hackathons</Dropdown.Item> */}
-              {/* <Dropdown.Item eventKey="3-3"># Placements</Dropdown.Item> */}
-              {/* <Dropdown.Item eventKey="3-4"># Internships</Dropdown.Item> */}
             </Dropdown>
             <Dropdown
               eventKey="4"
@@ -227,10 +223,6 @@ const SideNavChannel = () => {
                   <ChannelListPreview {...previewProps} type="messaging" />;
                 }}
               />
-
-              {/* <Dropdown.Item eventKey="4-1"># Friend1</Dropdown.Item>
-              <Dropdown.Item eventKey="4-2"># Friend2</Dropdown.Item>
-              <Dropdown.Item eventKey="4-3"># Friend3</Dropdown.Item> */}
             </Dropdown>
           </Nav>
         </Sidenav.Body>
