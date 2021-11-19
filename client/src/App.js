@@ -13,6 +13,8 @@ import "rsuite/dist/rsuite.min.css";
 import "stream-chat-react/dist/css/index.css";
 import "./App.css";
 
+export const GiphyContext = React.createContext({});
+
 const App = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userSlice.userInfo);
