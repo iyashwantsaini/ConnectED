@@ -37,12 +37,13 @@ const TextChat = () => {
           <SideNavChannel />
         </Col>
         <Col
-          lg={17}
+          lg={19}
+          // style={{width:"100%"}}
           className={`${styles.connectionMain} ${styles.heightExpand}`}
         >
-          <Row>
+          {/* <Row>
             <TopNav />
-          </Row>
+          </Row> */}
           <Row className={styles.heightExpandChats}>
             {/* <ChannelChat /> */}
             <ChannelContainer />

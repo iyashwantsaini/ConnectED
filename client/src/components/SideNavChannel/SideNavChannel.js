@@ -171,82 +171,59 @@ const SideNavChannel = () => {
             >
               ConnectED
             </Nav.Item>
-            <Dropdown eventKey="3" title="Channels" icon={<ScatterIcon />}>
-              <Dropdown.Item eventKey="3-1">
-                <Row>
-                  {/* <Col>
-                    <InputGroup
-                      style={{ width: 180 }}
-                      className={styles.searchButton}
-                    >
-                      <Input onChange={channelSearchInputHandler} />
-                      <InputGroup.Button onClick={channelSearchHandler}>
-                        <Search />
-                      </InputGroup.Button>
-                    </InputGroup>
-                  </Col> */}
-                  <Col>
-                    <Button
-                      className={styles.addButton}
-                      onClick={handleNewChannelOpenTeam}
-                    >
-                      +
-                    </Button>
-                  </Col>
-                </Row>
-              </Dropdown.Item>
-              <ChannelList
-                filters={filters}
-                channelRenderFilterFn={customChannelTeamFilter}
-                List={(listProps) => (
-                  <ChannelListCustom {...listProps} type="team" />
-                )}
-                Preview={(previewProps) => (
-                  <ChannelListPreview {...previewProps} type="team" />
-                )}
-              />
-            </Dropdown>
+            <Row>
+              <Col>
+                <Dropdown eventKey="3" title="Channels" icon={<ScatterIcon />}>
+                  <ChannelList
+                    filters={filters}
+                    channelRenderFilterFn={customChannelTeamFilter}
+                    List={(listProps) => (
+                      <ChannelListCustom {...listProps} type="team" />
+                    )}
+                    Preview={(previewProps) => (
+                      <ChannelListPreview {...previewProps} type="team" />
+                    )}
+                  />
+                </Dropdown>
+              </Col>
+              <Col>
+                <Button
+                  className={styles.addButton}
+                  onClick={handleNewChannelOpenTeam}
+                >
+                  +
+                </Button>
+              </Col>
+            </Row>
 
-            <Dropdown
-              eventKey="4"
-              title="Direct Messages"
-              icon={<WavePointIcon />}
-            >
-              <Dropdown.Item eventKey="4-1">
-                <Row>
-                  {/* <Col>
-                    <InputGroup
-                      style={{ width: 180 }}
-                      className={styles.searchButton}
-                    >
-                      <Input onChange={channelSearchInputHandler} />
-                      <InputGroup.Button onClick={channelSearchHandler}>
-                        <Search />
-                      </InputGroup.Button>
-                    </InputGroup>
-                  </Col> */}
-                  <Col>
-                    <Button
-                      className={styles.addButton}
-                      onClick={handleNewChannelOpenDirect}
-                    >
-                      +
-                    </Button>
-                  </Col>
-                </Row>
-              </Dropdown.Item>
-
-              <ChannelList
-                filters={filters}
-                channelRenderFilterFn={customChannelMessagingFilter}
-                List={(listProps) => (
-                  <ChannelListCustom {...listProps} type="messaging" />
-                )}
-                Preview={(previewProps) => (
-                  <ChannelListPreview {...previewProps} type="messaging" />
-                )}
-              />
-            </Dropdown>
+            <Row>
+              <Col>
+                <Dropdown
+                  eventKey="4"
+                  title="Direct Messages"
+                  icon={<WavePointIcon />}
+                >
+                  <ChannelList
+                    filters={filters}
+                    channelRenderFilterFn={customChannelMessagingFilter}
+                    List={(listProps) => (
+                      <ChannelListCustom {...listProps} type="messaging" />
+                    )}
+                    Preview={(previewProps) => (
+                      <ChannelListPreview {...previewProps} type="messaging" />
+                    )}
+                  />
+                </Dropdown>
+              </Col>
+              <Col>
+                <Button
+                  className={styles.addButton}
+                  onClick={handleNewChannelOpenDirect}
+                >
+                  +
+                </Button>
+              </Col>
+            </Row>
             <ChannelCreateEdit
               handleNewChannelClose={handleNewChannelClose}
               handleNewChannelSubmission={handleNewChannelSubmission}

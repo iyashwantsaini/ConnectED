@@ -8,6 +8,10 @@
   background-color: #1a1d24;
 }
 
-.str-chat__input-flat str-chat__input-flat--send-button-active null {
-  background-color: #1a1d24;
+.dark.str-chat .str-chat__input-flat {
+  background-color: rgba(0,0,0,0);
+}
+
+.dark.str-chat .str-chat__input-flat textarea {
+  background-color: #3c3f43;
 }
