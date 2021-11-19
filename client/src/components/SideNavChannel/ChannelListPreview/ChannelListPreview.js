@@ -22,8 +22,8 @@ const ChannelListPreview = ({ setActiveChannel, channel, type }) => {
           <Row>
             <Col>
               <Avatar
-                // image={members[0]?.user?.image}
-                image="https://gravatar.com/avatar/c777d9456f53428a367078eb5c3c6b09?s=400&d=robohash&r=x"
+                image={members[0]?.user?.image}
+                // image="https://gravatar.com/avatar/c777d9456f53428a367078eb5c3c6b09?s=400&d=robohash&r=x"
                 name={members[0]?.user?.email}
                 size={24}
               />

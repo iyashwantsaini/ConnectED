@@ -52,14 +52,26 @@ const SideNavChannel = () => {
 
   const filters = { members: { $in: [client.userID] } };
 
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [teamChannels, setTeamChannels] = useState([]);
+  const [directChannels, setDirectChannels] = useState([]);
+
   useEffect(() => {
-    try {
-      //fetch channels
-    } catch (error) {
-      //show error msg
-      console.log(error);
+    if (!query) {
+      setTeamChannels([]);
+      setDirectChannels([]);
     }
-  }, []);
+  }, [query]);
+
+  // useEffect(() => {
+  //   try {
+  //     //fetch channels
+  //   } catch (error) {
+  //     //show error msg
+  //     console.log(error);
+  //   }
+  // }, []);
 
   const handleNewChannelClose = () => {
     setNewChannelOpen(false);
@@ -121,10 +133,25 @@ const SideNavChannel = () => {
   };
   const channelSearchHandler = async () => {
     try {
-      //fetch channels
-    } catch (err) {
-      //error handling
-      setChannelSearchTerm("");
+      const channelResponse = client.queryChannels({
+        type: "team",
+        name: { $autocomplete: channelSearchTerm },
+        members: { $in: [client.userID] },
+      });
+      const userResponse = client.queryUsers({
+        id: { $ne: client.userID },
+        name: { $autocomplete: channelSearchTerm },
+      });
+
+      const [channels, { users }] = await Promise.all([
+        channelResponse,
+        userResponse,
+      ]);
+
+      if (channels.length) setTeamChannels(channels);
+      if (users.length) setDirectChannels(users);
+    } catch (error) {
+      setQuery("");
     }
   };
 
@@ -147,7 +174,7 @@ const SideNavChannel = () => {
             <Dropdown eventKey="3" title="Channels" icon={<ScatterIcon />}>
               <Dropdown.Item eventKey="3-1">
                 <Row>
-                  <Col>
+                  {/* <Col>
                     <InputGroup
                       style={{ width: 180 }}
                       className={styles.searchButton}
@@ -157,7 +184,7 @@ const SideNavChannel = () => {
                         <Search />
                       </InputGroup.Button>
                     </InputGroup>
-                  </Col>
+                  </Col> */}
                   <Col>
                     <Button
                       className={styles.addButton}
@@ -187,7 +214,7 @@ const SideNavChannel = () => {
             >
               <Dropdown.Item eventKey="4-1">
                 <Row>
-                  <Col>
+                  {/* <Col>
                     <InputGroup
                       style={{ width: 180 }}
                       className={styles.searchButton}
@@ -197,7 +224,7 @@ const SideNavChannel = () => {
                         <Search />
                       </InputGroup.Button>
                     </InputGroup>
-                  </Col>
+                  </Col> */}
                   <Col>
                     <Button
                       className={styles.addButton}

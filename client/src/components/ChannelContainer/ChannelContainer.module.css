@@ -1,0 +1,35 @@
+.channel_empty__container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-bottom: 20px;
+}
+
+.channel_empty__first {
+  font-family: Helvetica Neue, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 120%;
+  color: #2c2c30;
+  margin-bottom: 10px;
+}
+
+.channel_empty__first .channel_empty__user-name {
+  color: var(--primary-color);
+}
+
+.channel_empty__second {
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 14px;
+  line-height: 120%;
+  margin: 0;
+  color: #858688;
+}
+
+.channel__container {
+  height: 100%;
+  width: 100%;
+}

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./App.css";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Request from "./pages/Auth/Request";
@@ -11,6 +10,8 @@ import AppGrid from "./pages/App/AppGrid/AppGrid";
 import { userActions } from "./store/userSlice";
 import { USER_LOGIN_SUCCESS } from "./constants/userConstants";
 import "rsuite/dist/rsuite.min.css";
+import "stream-chat-react/dist/css/index.css";
+import "./App.css";
 
 const App = () => {
   const dispatch = useDispatch();

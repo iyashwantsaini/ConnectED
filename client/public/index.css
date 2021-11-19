@@ -1,0 +1,13 @@
+.str-chat {
+  height: 100%;
+  background-color: #1a1d24;
+  width: 100%;
+}
+
+.str-chat.team.dark {
+  background-color: #1a1d24;
+}
+
+.str-chat__input-flat str-chat__input-flat--send-button-active null {
+  background-color: #1a1d24;
+}
