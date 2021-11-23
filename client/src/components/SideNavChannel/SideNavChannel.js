@@ -1,30 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  ChannelList,
-  useChatContext,
-  ChannelSearch,
-  ThemeChannelList,
-  ThemeChannelPreview,
-} from "stream-chat-react";
-import {
-  Sidenav,
-  Nav,
-  Dropdown,
-  Modal,
-  ButtonToolbar,
-  Button,
-  Input,
-  Form,
-  InputGroup,
-  Row,
-  Col,
-} from "rsuite";
+import { ChannelList, useChatContext } from "stream-chat-react";
+import { Sidenav, Nav, Dropdown, Button, Row, Col } from "rsuite";
 
 import styles from "./SideNavChannel.module.css";
 import DashboardIcon from "@rsuite/icons/Dashboard";
 import ScatterIcon from "@rsuite/icons/Scatter";
 import WavePointIcon from "@rsuite/icons/WavePoint";
-import Search from "@rsuite/icons/Search";
 import ChannelListCustom from "./ChannelListCustom/ChannelListCustom";
 import ChannelListPreview from "./ChannelListPreview/ChannelListPreview";
 import ChannelCreateEdit from "./ChannelCreateEdit/ChannelCreateEdit";
@@ -43,7 +24,6 @@ const SideNavChannel = () => {
     channelName: "",
     channelDescription: "",
   });
-  const [channels, setChannels] = useState([]);
   const [channelSearchTerm, setChannelSearchTerm] = useState("");
   const [channelType, setChannelType] = useState("team");
 
@@ -53,7 +33,6 @@ const SideNavChannel = () => {
   const filters = { members: { $in: [client.userID] } };
 
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
   const [teamChannels, setTeamChannels] = useState([]);
   const [directChannels, setDirectChannels] = useState([]);
 
@@ -63,15 +42,6 @@ const SideNavChannel = () => {
       setDirectChannels([]);
     }
   }, [query]);
-
-  // useEffect(() => {
-  //   try {
-  //     //fetch channels
-  //   } catch (error) {
-  //     //show error msg
-  //     console.log(error);
-  //   }
-  // }, []);
 
   const handleNewChannelClose = () => {
     setNewChannelOpen(false);
@@ -172,7 +142,7 @@ const SideNavChannel = () => {
               ConnectED
             </Nav.Item>
             <Row>
-              <Col>
+              <Col lg={20}>
                 <Dropdown eventKey="3" title="Channels" icon={<ScatterIcon />}>
                   <ChannelList
                     filters={filters}
@@ -196,8 +166,10 @@ const SideNavChannel = () => {
               </Col>
             </Row>
 
+            <br/>
+
             <Row>
-              <Col>
+              <Col lg={20}>
                 <Dropdown
                   eventKey="4"
                   title="Direct Messages"

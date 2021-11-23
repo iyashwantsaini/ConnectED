@@ -31,11 +31,11 @@ const TextChat = () => {
   return (
     <React.Fragment>
       <Chat client={client} theme="team dark">
-        <Col lg={4} className={`${styles.channels} ${styles.heightExpand}`}>
+        <Col lg={5} className={`${styles.channels} ${styles.heightExpand}`}>
           <SideNavChannel />
         </Col>
         <Col
-          lg={19}
+          lg={18}
           // style={{width:"100%"}}
           className={`${styles.connectionMain} ${styles.heightExpand}`}
         >

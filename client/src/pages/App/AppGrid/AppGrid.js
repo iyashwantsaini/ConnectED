@@ -16,9 +16,9 @@ const AppGrid = () => {
           <Col lg={0.5} className={`${styles.sidemain} ${styles.heightExpand}`}>
             <SideNavMain />
           </Col>
-          {pageInfo === "home" && <TextChat />}
-          {pageInfo === "about" && <About />}
-          {pageInfo === "profile" && <Profile />}
+          {(pageInfo === "home" || pageInfo === "logout") && <TextChat />}
+          {(pageInfo === "about" || pageInfo === "logout") && <About />}
+          {(pageInfo === "profile" || pageInfo === "logout") && <Profile />}
         </Row>
       </Grid>
     </React.Fragment>

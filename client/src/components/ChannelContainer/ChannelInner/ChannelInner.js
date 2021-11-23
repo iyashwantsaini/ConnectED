@@ -11,8 +11,12 @@ import {
 } from "stream-chat-react";
 import styles from "./ChannelInner.module.css";
 
+import { Toggle } from "rsuite";
+
 // import { ChannelInfo } from '../assets';
 // import InfoRoundIcon from "@rsuite/icons/InfoRound";
+// import EditIcon from "@mui/icons-material/Edit";
+import EditIcon from "@rsuite/icons/Edit";
 
 export const GiphyContext = React.createContext({});
 
@@ -98,6 +102,9 @@ const TeamChannelHeader = () => {
         {/* <span style={{ display: "flex" }} onClick={() => setIsEditing(true)}>
           <InfoRoundIcon />
         </span> */}
+        <span style={{ display: "flex" }}>
+          <EditIcon />
+        </span>
       </div>
     );
   };
@@ -112,9 +119,12 @@ const TeamChannelHeader = () => {
     <div className={styles.team_channel_header__container}>
       <MessagingHeader />
       <div className={styles.team_channel_header__right}>
-        <p className={styles.team_channel_header__right_text}>
-          {getWatcherText(watcher_count)}
-        </p>
+        <span>
+          Voice Connect:{" "}
+          {/* <Toggle onChange={setErrorVisible} checked={errorVisible} /> */}
+          <Toggle />
+        </span>
+        <span className={styles.watcher_count}>{getWatcherText(watcher_count)}</span>
       </div>
     </div>
   );

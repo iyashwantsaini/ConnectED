@@ -135,3 +135,7 @@
   font-weight: 500;
   font-size: 14px;
 }
+
+.watcher_count {
+  padding-left: 10px;
+}

@@ -9,7 +9,7 @@ import LogoutModal from "../LogoutModal/LogoutModal";
 import { useNavigate } from "react-router-dom";
 import { USER_LOGOUT } from "../../constants/userConstants";
 import { pageActions } from "../../store/pageSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CustomNav = ({ active, onSelect, ...props }) => {
   return (
