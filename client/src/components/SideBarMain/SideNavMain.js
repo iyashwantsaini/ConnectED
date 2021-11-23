@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SideNavMain.module.css";
 import { Nav } from "rsuite";
-import Profile from "../../pages/App/Profile/Profile";
-import AppGrid from "../../pages/App/AppGrid/AppGrid";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InfoIcon from "@mui/icons-material/Info";
-import TextFieldsIcon from "@mui/icons-material/TextFields";
-import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import LogoutModal from "../LogoutModal/LogoutModal";
+import { useNavigate } from "react-router-dom";
+import { USER_LOGOUT } from "../../constants/userConstants";
+import { pageActions } from "../../store/pageSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const CustomNav = ({ active, onSelect, ...props }) => {
   return (
@@ -30,13 +32,9 @@ const CustomNav = ({ active, onSelect, ...props }) => {
       ></Nav.Item>
       <Nav.Item
         className={styles.iconsShell}
-        eventKey="textchannels"
-        icon={<TextFieldsIcon className={styles.icons} />}
-      ></Nav.Item>
-      <Nav.Item
-        className={styles.iconsShell}
-        eventKey="voicechannels"
-        icon={<RecordVoiceOverIcon className={styles.icons} />}
+        eventKey="logout"
+        icon={<MeetingRoomIcon className={styles.icons} />}
+        onClick={props.handleLogoutOpen}
       ></Nav.Item>
       <Nav.Item
         className={styles.iconsShell}
@@ -48,7 +46,35 @@ const CustomNav = ({ active, onSelect, ...props }) => {
 };
 
 const SideNavMain = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [active, setActive] = React.useState("home");
+
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const handleLogoutOpen = () => {
+    setLogoutModalOpen(true);
+  };
+
+  const handleLogoutClose = () => {
+    setLogoutModalOpen(false);
+  };
+
+  const handleLogoutSubmission = () => {
+    localStorage.removeItem("userInfo");
+    dispatch({ type: USER_LOGOUT });
+    setLogoutModalOpen(false);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    dispatch(
+      pageActions.togglePage({
+        payload: active,
+      })
+    );
+  }, [active, dispatch]);
+
   return (
     <React.Fragment>
       <CustomNav
@@ -56,6 +82,12 @@ const SideNavMain = () => {
         reversed
         active={active}
         onSelect={setActive}
+        handleLogoutOpen={handleLogoutOpen}
+      />
+      <LogoutModal
+        logoutModalOpen={logoutModalOpen}
+        handleLogoutClose={handleLogoutClose}
+        handleLogoutSubmission={handleLogoutSubmission}
       />
     </React.Fragment>
   );

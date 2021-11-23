@@ -44,6 +44,11 @@ const App = () => {
             element={userInfo ? <AppGrid /> : <Login />}
           ></Route>
           <Route
+            exact
+            path="/login"
+            element={userInfo ? <AppGrid /> : <Login />}
+          ></Route>
+          <Route
             path="/register"
             element={userInfo ? <AppGrid /> : <Register />}
           ></Route>
