@@ -7,11 +7,16 @@ require("dotenv").config();
 
 //importing custom routes
 var userRoutes = require("./routes/userRoutes.js");
+var adminRoutes = require("./routes/adminRoutes.js")
 
 //error handling imports
 var { errorHandler, notFound } = require("./middleware/errorMiddleware.js");
 
 const app = express();
+
+// admin panel
+app.use("/admin", adminRoutes);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
