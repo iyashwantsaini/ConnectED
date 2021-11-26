@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  Channel,
-  MessageTeam,
-  MessageList,
-  MessageInput,
-} from "stream-chat-react";
+import { Channel, MessageTeam } from "stream-chat-react";
 
-import ChannelInner from "./ChannelInner/ChannelInner";
+import ChannelInner from "../ChannelInner/ChannelInner";
 import styles from "./ChannelContainer.module.css";
 
 const ChannelContainer = () => {
@@ -29,10 +24,6 @@ const ChannelContainer = () => {
       >
         <ChannelInner />
       </Channel>
-      {/* <Channel>
-        <MessageList />
-        <MessageInput />
-      </Channel> */}
     </div>
   );
 };

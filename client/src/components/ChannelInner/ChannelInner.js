@@ -11,12 +11,12 @@ import {
 } from "stream-chat-react";
 import styles from "./ChannelInner.module.css";
 
-import LogoutModal from "../../LogoutModal/LogoutModal";
+import LogoutModal from "../LogoutModal/LogoutModal";
 
 import { Button } from "rsuite";
 import OffRoundIcon from "@rsuite/icons/OffRound";
 import EditIcon from "@rsuite/icons/Edit";
-import { USER_LOGOUT } from "../../../constants/userConstants";
+import { USER_LOGOUT } from "../../constants/userConstants";
 import { useDispatch } from "react-redux";
 
 export const GiphyContext = React.createContext({});

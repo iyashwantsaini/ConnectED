@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import styles from "./SideNavMain.module.css";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Nav } from "rsuite";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import InfoIcon from "@mui/icons-material/Info";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+
 import { pageActions } from "../../store/pageSlice";
-import { useDispatch } from "react-redux";
+import styles from "./SideNavMain.module.css";
 
 const CustomNav = ({ active, onSelect, ...props }) => {
   return (

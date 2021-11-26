@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { ChannelList, useChatContext } from "stream-chat-react";
 import { Sidenav, Nav, Dropdown, Button, Row, Col } from "rsuite";
-
-import styles from "./SideNavChannel.module.css";
 import DashboardIcon from "@rsuite/icons/Dashboard";
 import ScatterIcon from "@rsuite/icons/Scatter";
 import WavePointIcon from "@rsuite/icons/WavePoint";
-import ChannelListCustom from "./ChannelListCustom/ChannelListCustom";
-import ChannelListPreview from "./ChannelListPreview/ChannelListPreview";
-import ChannelCreateEdit from "./ChannelCreateEdit/ChannelCreateEdit";
+
+import styles from "./SideNavChannel.module.css";
+import ChannelListCustom from "../ChannelListCustom/ChannelListCustom";
+import ChannelListPreview from "../ChannelListPreview/ChannelListPreview";
+import ChannelCreateEdit from "../ChannelCreateEdit/ChannelCreateEdit";
 
 const customChannelTeamFilter = (channels) => {
   return channels.filter((channel) => channel.type === "team");
