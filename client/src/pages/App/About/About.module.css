@@ -54,19 +54,6 @@
   border-radius: 5px;
 }
 
-.form input[type="password"],
-.form input[type="text"],
-.form input[type="submit"] {
-  width: 100%;
-}
-
-.form__field {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-}
-
 .form__input {
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -85,48 +72,6 @@
   --loginSubmitBackgroundColor: #ea4c88;
   --loginSubmitColor: #eee;
   --loginSubmitHoverBackgroundColor: #d44179;
-}
-
-.login {
-  color: #eee;
-  color: var(--loginColor);
-}
-
-.login label,
-.login input[type="text"],
-.login input[type="password"],
-.login input[type="submit"] {
-  border-radius: 0.25rem;
-  border-radius: var(--loginBorderRadus);
-  padding: 1rem;
-}
-
-.login label {
-  background-color: #363b41;
-  background-color: var(--loginLabelBackgroundColor);
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-.login input[type="password"],
-.login input[type="email"],
-.login input[type="text"] {
-  background-color: #3b4148;
-  background-color: var(--loginInputBackgroundColor);
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-
-.login input[type="password"]:focus,
-.login input[type="password"]:hover,
-.login input[type="email"]:focus,
-.login input[type="email"]:hover,
-.login input[type="text"]:focus,
-.login input[type="text"]:hover {
-  background-color: #3b4148;
-  background-color: var(--loginInputHoverBackgroundColor);
 }
 
 p {

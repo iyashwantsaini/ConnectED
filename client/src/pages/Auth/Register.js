@@ -119,10 +119,6 @@ const Register = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <React.Fragment>
       <div class={`${styles.align}`}>
@@ -181,7 +177,6 @@ const Register = () => {
                 appearance="primary"
                 className={styles.Login_btn}
                 type="submit"
-                // onClick={handleSubmission}
               >
                 Register
               </Button>

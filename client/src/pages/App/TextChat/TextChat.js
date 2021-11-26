@@ -2,14 +2,12 @@ import React from "react";
 import { Row, Col } from "rsuite";
 import { StreamChat } from "stream-chat";
 import { Chat } from "stream-chat-react";
-import Cookies from "universal-cookie";
 
 import SideNavChannel from "../../../components/SideNavChannel/SideNavChannel";
-// import ChannelChat from "../../../components/ChannelChat/ChannelChat";
 import styles from "./TextChat.module.css";
 import ChannelContainer from "../../../components/ChannelContainer/ChannelContainer";
 
-const apiKey = "ghaebtv2akna";
+const apiKey = process.env.REACT_APP_STREAM_API_KEY;
 const client = StreamChat.getInstance(apiKey);
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 if (userInfo) {
@@ -26,32 +24,20 @@ if (userInfo) {
 }
 
 const TextChat = () => {
-  console.log(client);
-
   return (
-    <React.Fragment>
-      <Chat client={client} theme="team dark">
-        <Col lg={5} className={`${styles.channels} ${styles.heightExpand}`}>
-          <SideNavChannel />
-        </Col>
-        <Col
-          lg={18}
-          // style={{width:"100%"}}
-          className={`${styles.connectionMain} ${styles.heightExpand}`}
-        >
-          {/* <Row>
-            <TopNav />
-          </Row> */}
-          <Row className={styles.heightExpandChats}>
-            {/* <ChannelChat /> */}
-            <ChannelContainer />
-          </Row>
-        </Col>
-      </Chat>
-      {/* <Col lg={3} className={`${styles.infoChannel} ${styles.heightExpand}`}>
-        <RightBar />
-      </Col> */}
-    </React.Fragment>
+    <Chat client={client} theme="team dark">
+      <Col lg={5} className={`${styles.channels} ${styles.heightExpand}`}>
+        <SideNavChannel />
+      </Col>
+      <Col
+        lg={18}
+        className={`${styles.connectionMain} ${styles.heightExpand}`}
+      >
+        <Row className={styles.heightExpandChats}>
+          <ChannelContainer />
+        </Row>
+      </Col>
+    </Chat>
   );
 };
 

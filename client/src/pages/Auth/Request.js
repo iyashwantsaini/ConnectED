@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Login.module.css";
-import { Button, IconButton, Form, Input, Uploader } from "rsuite";
-import { Icon } from "@rsuite/icons";
+import { Button, Input } from "rsuite";
 import EmailIcon from "@rsuite/icons/Email";
-import TagLockIcon from "@rsuite/icons/TagLock";
-import ThaparIcon from "./images/thapar_icon.jpg";
-import PageNextIcon from "@rsuite/icons/PageNext";
 import UserInfoIcon from "@rsuite/icons/UserInfo";
-import UserBadgeIcon from "@rsuite/icons/UserBadge";
-import ImageIcon from "@rsuite/icons/Image";
 import GrowthIcon from "@rsuite/icons/Growth";
 import BranchIcon from "@rsuite/icons/Branch";
 import { Link } from "react-router-dom";
+
+import styles from "./Login.module.css";
+import ThaparIcon from "./images/thapar_icon.jpg";
 
 const Request = () => {
   const [selectedImage, setSelectedImage] = useState(null);

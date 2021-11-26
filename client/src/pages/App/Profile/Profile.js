@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Input, Message } from "rsuite";
 import TagLockIcon from "@rsuite/icons/TagLock";
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 import styles from "./Profile.module.css";
 import ThaparIcon from "../../Auth/images/thapar_icon.jpg";
-import { useSelector } from "react-redux";
 
 const Profile = () => {
   const userInfo = JSON.parse(useSelector((state) => state.userSlice.userInfo));
@@ -69,63 +70,61 @@ const Profile = () => {
   };
 
   return (
-    <React.Fragment>
-      <div class={`${styles.align}`}>
-        <div class={`${styles.grid}`}>
-          <img src={ThaparIcon} alt="Icon" className={styles.college_icon} />
-          <form
-            onSubmit={handleSubmission}
-            class={`${styles.form} ${styles.login}`}
-          >
-            <div class={styles.form__field}>
-              <label for={styles.login__password}>
-                <TagLockIcon />
-              </label>
-              <Input
-                id={styles.login__password}
-                type="password"
-                name="password"
-                class={styles.form__input}
-                placeholder="Change Password"
-                onChange={handleChangePass}
-                required
-              />
-            </div>
-            <div class={styles.form__field}>
-              <label for={styles.login__password}>
-                <TagLockIcon />
-              </label>
-              <Input
-                id={styles.login__password}
-                type="password"
-                name="repassword"
-                class={styles.form__input}
-                placeholder="Confirm Changed Password"
-                onChange={handleChangeRePass}
-                required
-              />
-            </div>
-            <div class={styles.form__field}>
-              <Button
-                color="blue"
-                appearance="primary"
-                className={styles.Login_btn}
-                type="submit"
-              >
-                Update Password
-              </Button>
-            </div>
-          </form>
-          <br />
-          <Message showIcon type="error" hidden={!errorPresent}>
-            {errorMessage}
-          </Message>
-          <Message showIcon type="success" hidden={successPresent}>
-            Success!
-          </Message>
-        </div>
+    <div class={`${styles.align}`}>
+      <div class={`${styles.grid}`}>
+        <img src={ThaparIcon} alt="Icon" className={styles.college_icon} />
+        <form
+          onSubmit={handleSubmission}
+          class={`${styles.form} ${styles.login}`}
+        >
+          <div class={styles.form__field}>
+            <label for={styles.login__password}>
+              <TagLockIcon />
+            </label>
+            <Input
+              id={styles.login__password}
+              type="password"
+              name="password"
+              class={styles.form__input}
+              placeholder="Change Password"
+              onChange={handleChangePass}
+              required
+            />
+          </div>
+          <div class={styles.form__field}>
+            <label for={styles.login__password}>
+              <TagLockIcon />
+            </label>
+            <Input
+              id={styles.login__password}
+              type="password"
+              name="repassword"
+              class={styles.form__input}
+              placeholder="Confirm Changed Password"
+              onChange={handleChangeRePass}
+              required
+            />
+          </div>
+          <div class={styles.form__field}>
+            <Button
+              color="blue"
+              appearance="primary"
+              className={styles.Login_btn}
+              type="submit"
+            >
+              Update Password
+            </Button>
+          </div>
+        </form>
+        <br />
+        <Message showIcon type="error" hidden={!errorPresent}>
+          {errorMessage}
+        </Message>
+        <Message showIcon type="success" hidden={successPresent}>
+          Success!
+        </Message>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
