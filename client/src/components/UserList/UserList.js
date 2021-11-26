@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, useChatContext } from "stream-chat-react";
 import WavePointIcon from "@rsuite/icons/WavePoint";
-
-// import { InviteIcon } from '../assets';
+// import "./UserList.css";
+import styles from "./UserList.module.css";
 
 const ListContainer = ({ children }) => {
   return (
-    <div className="user-list__container">
-      <div className="user-list__header">
+    <div className={styles.user_list__container}>
+      <div className={styles.user_list__header}>
         <p>User</p>
         <p>Invite</p>
       </div>
@@ -32,15 +32,15 @@ const UserItem = ({ user, setSelectedUsers }) => {
   };
 
   return (
-    <div className="user-item__wrapper" onClick={handleSelect}>
-      <div className="user-item__name-wrapper">
+    <div className={styles.user_item__wrapper} onClick={handleSelect}>
+      <div className={styles.user_item__name_wrapper}>
         <Avatar image={user.image} name={user.fullName || user.id} size={32} />
-        <p className="user-item__name">{user.fullName || user.id}</p>
+        <p className={styles.user_item__name}>{user.fullName || user.id}</p>
       </div>
       {selected ? (
         <WavePointIcon />
       ) : (
-        <div className="user-item__invite-empty" />
+        <div className={styles.user_item__invite_empty} />
       )}
     </div>
   );
@@ -83,7 +83,7 @@ const UserList = ({ setSelectedUsers }) => {
   if (error) {
     return (
       <ListContainer>
-        <div className="user-list__message">
+        <div className={styles.user_list__message}>
           Error loading, please refresh and try again.
         </div>
       </ListContainer>
@@ -93,7 +93,7 @@ const UserList = ({ setSelectedUsers }) => {
   if (listEmpty) {
     return (
       <ListContainer>
-        <div className="user-list__message">No users found.</div>
+        <div className={styles.user_list__message}>No users found.</div>
       </ListContainer>
     );
   }
@@ -101,7 +101,7 @@ const UserList = ({ setSelectedUsers }) => {
   return (
     <ListContainer>
       {loading ? (
-        <div className="user-list__message">Loading users...</div>
+        <div className={styles.user_list__message}>Loading users...</div>
       ) : (
         users?.map((user, i) => (
           <UserItem

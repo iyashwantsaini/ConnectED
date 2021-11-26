@@ -13,7 +13,7 @@ import {
 } from "../../constants/userConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/userSlice";
-import styles from "./Login.module.css";
+import styles from "./Register.module.css";
 import ThaparIcon from "./images/thapar_icon.jpg";
 
 const Register = () => {

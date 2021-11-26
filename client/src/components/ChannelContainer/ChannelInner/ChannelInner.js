@@ -11,12 +11,13 @@ import {
 } from "stream-chat-react";
 import styles from "./ChannelInner.module.css";
 
-import { Toggle } from "rsuite";
+import LogoutModal from "../../LogoutModal/LogoutModal";
 
-// import { ChannelInfo } from '../assets';
-// import InfoRoundIcon from "@rsuite/icons/InfoRound";
-// import EditIcon from "@mui/icons-material/Edit";
+import { Button } from "rsuite";
+import OffRoundIcon from "@rsuite/icons/OffRound";
 import EditIcon from "@rsuite/icons/Edit";
+import { USER_LOGOUT } from "../../../constants/userConstants";
+import { useDispatch } from "react-redux";
 
 export const GiphyContext = React.createContext({});
 
@@ -115,17 +116,45 @@ const TeamChannelHeader = () => {
     return `${watchers} users online`;
   };
 
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const handleLogoutOpen = () => {
+    setLogoutModalOpen(true);
+  };
+
+  const handleLogoutClose = () => {
+    setLogoutModalOpen(false);
+  };
+
+  const dispatch = useDispatch();
+
+  const handleLogoutSubmission = () => {
+    localStorage.removeItem("userInfo");
+    dispatch({ type: USER_LOGOUT });
+    setLogoutModalOpen(false);
+    window.location.reload();
+  };
+
   return (
     <div className={styles.team_channel_header__container}>
       <MessagingHeader />
       <div className={styles.team_channel_header__right}>
-        <span>
-          Voice Connect:{" "}
-          {/* <Toggle onChange={setErrorVisible} checked={errorVisible} /> */}
-          <Toggle />
+        <span className={styles.watcher_count}>
+          {getWatcherText(watcher_count)}
         </span>
-        <span className={styles.watcher_count}>{getWatcherText(watcher_count)}</span>
+        <span>
+          <Button onClick={handleLogoutOpen}>
+            {" "}
+            Logout
+            <OffRoundIcon />
+          </Button>
+        </span>
       </div>
+      <LogoutModal
+        logoutModalOpen={logoutModalOpen}
+        handleLogoutClose={handleLogoutClose}
+        handleLogoutSubmission={handleLogoutSubmission}
+      />
     </div>
   );
 };
