@@ -78,5 +78,10 @@
 }
 
 .rs-form.rs-form-vertical.rs-form-fluid {
-  width: 95%;
+  width: 93%;
+}
+
+.rs-col p{
+  margin-top: 0;
+  margin-bottom: 0;
 }
