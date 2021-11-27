@@ -14,6 +14,8 @@
 
 .dark.str-chat .str-chat__input-flat textarea {
   background-color: #3c3f43;
+}form.rs-form.rs-form-vertical.rs-form-fluid {
+  width: 95%;
 }
 
 .rs-dropdown-toggle,
@@ -65,4 +67,16 @@
 
 .ChannelInner_team_channel_header__right__3WjnD {
   flex: 1 1;
+}
+
+.SideNavChannel_channelListHead__UY6qM.rs-sidenav-item.rs-sidenav-item-active {
+  width: 80px;
+}
+
+.rs-col-lg-18 {
+  width: 74%;
+}
+
+.rs-form.rs-form-vertical.rs-form-fluid {
+  width: 95%;
 }
