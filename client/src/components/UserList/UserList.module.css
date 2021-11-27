@@ -20,18 +20,19 @@
   align-items: center;
   flex: 2;
   text-align: left;
+  padding-top: 10px;
 }
 
 .user_item__wrapper p {
   font-family: Helvetica Neue, sans-serif;
   font-size: 14px;
   line-height: 17px;
-  color: #2c2c30;
   word-break: break-all;
 }
 
 .user_item__name {
   font-weight: 500;
+  color: white;
 }
 
 .user_item__last_active {
@@ -41,6 +42,11 @@
   text-align: right;
 
   margin: 0px 20px;
+}
+
+.user_item__selector{
+  padding-top: 10px;
+  padding-right: 10px;
 }
 
 .user_item__invite_empty {

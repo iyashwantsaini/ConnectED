@@ -8,7 +8,7 @@ import WavePointIcon from "@rsuite/icons/WavePoint";
 import styles from "./SideNavChannel.module.css";
 import ChannelListCustom from "../ChannelListCustom/ChannelListCustom";
 import ChannelListPreview from "../ChannelListPreview/ChannelListPreview";
-import ChannelCreateEdit from "../ChannelCreateEdit/ChannelCreateEdit";
+import ChannelCreate from "../ChannelCreate/ChannelCreate";
 
 const customChannelTeamFilter = (channels) => {
   return channels.filter((channel) => channel.type === "team");
@@ -24,6 +24,8 @@ const SideNavChannel = () => {
     channelName: "",
     channelDescription: "",
   });
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userType = userInfo.usertype ? userInfo.usertype : "student";
   const [channelSearchTerm, setChannelSearchTerm] = useState("");
   const [channelType, setChannelType] = useState("team");
 
@@ -156,17 +158,19 @@ const SideNavChannel = () => {
                   />
                 </Dropdown>
               </Col>
-              <Col>
-                <Button
-                  className={styles.addButton}
-                  onClick={handleNewChannelOpenTeam}
-                >
-                  +
-                </Button>
-              </Col>
+              {(userType === "admin" || userType === "teacher") && (
+                <Col>
+                  <Button
+                    className={styles.addButton}
+                    onClick={handleNewChannelOpenTeam}
+                  >
+                    +
+                  </Button>
+                </Col>
+              )}
             </Row>
 
-            <br/>
+            <br />
 
             <Row>
               <Col lg={20}>
@@ -196,7 +200,7 @@ const SideNavChannel = () => {
                 </Button>
               </Col>
             </Row>
-            <ChannelCreateEdit
+            <ChannelCreate
               handleNewChannelClose={handleNewChannelClose}
               handleNewChannelSubmission={handleNewChannelSubmission}
               channelNameChangeHandler={channelNameChangeHandler}

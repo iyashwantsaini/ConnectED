@@ -75,13 +75,13 @@ const Login = () => {
           { email, password },
           config
         );
+        localStorage.setItem("userInfo", JSON.stringify(data));
         dispatch(
           userActions.userLogin({
             type: USER_LOGIN_SUCCESS,
             payload: data,
           })
         );
-        localStorage.setItem("userInfo", JSON.stringify(data));
       } else {
         setErrorMessage("Incorrect Inputs!");
       }
@@ -152,7 +152,7 @@ const Login = () => {
           </form>
           <br />
           <p class={`${styles.text__left}`}>
-            New Member ? <Link to="/request">Request Access</Link>
+            New Member ? <Link to="/register">Register</Link>
           </p>
           <br />
           <Message showIcon type="error" hidden={!errorPresent}>

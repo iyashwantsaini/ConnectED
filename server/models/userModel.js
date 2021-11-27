@@ -14,12 +14,10 @@ const userSchema = mongoose.Schema(
     },
     usertype: {
       type: String,
-      required: true,
       default: "student",
     },
     rollnumber: {
       type: String,
-      unique: true,
     },
     firstname: {
       type: String,
