@@ -7,7 +7,7 @@ require("dotenv").config();
 
 //importing custom routes
 var userRoutes = require("./routes/userRoutes.js");
-var adminRoutes = require("./routes/adminRoutes.js")
+var adminRoutes = require("./routes/adminRoutes.js");
 
 //error handling imports
 var { errorHandler, notFound } = require("./middleware/errorMiddleware.js");
@@ -30,9 +30,9 @@ app.use("/api/user", userRoutes);
 //handling deployment
 const dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(dirname, "/frontend/build")));
+  app.use(express.static(path.join(dirname, "/build")));
   app.get("*", (req, res) =>
-    res.sendFile(path.resolve(dirname, "frontend", "build", "index.html"))
+    res.sendFile(path.resolve(dirname, "build", "index.html"))
   );
 } else {
   app.get("/", (req, res) => {

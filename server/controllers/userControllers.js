@@ -27,6 +27,11 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       token: generateToken(user._id),
       stream_token: stream_token,
+      rollnumber: user.rollnumber ? user.rollnumber : "",
+      firstname: user.firstname ? user.firstname : "",
+      lastname: user.lastname ? user.lastname : "",
+      batch: user.batch ? user.batch : "",
+      usertype: user.usertype ? user.usertype : "",
     });
   } else {
     res.status(401);
@@ -61,6 +66,11 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       token: generateToken(user._id),
       stream_token: stream_token,
+      rollnumber: user.rollnumber ? user.rollnumber : "",
+      firstname: user.firstname ? user.firstname : "",
+      lastname: user.lastname ? user.lastname : "",
+      batch: user.batch ? user.batch : "",
+      usertype: user.usertype ? user.usertype : "",
     });
   } else {
     res.status(400);
@@ -72,7 +82,6 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  console.log(req.body);
   const user = await User.findById(req.body._id);
   const serverClient = connect(api_key, api_secret, app_id);
 
@@ -90,6 +99,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       token: generateToken(user._id),
       stream_token: stream_token,
+      rollnumber: user.rollnumber ? user.rollnumber : "",
+      firstname: user.firstname ? user.firstname : "",
+      lastname: user.lastname ? user.lastname : "",
+      batch: user.batch ? user.batch : "",
+      usertype: user.usertype ? user.usertype : "",
     });
   } else {
     res.status(404);

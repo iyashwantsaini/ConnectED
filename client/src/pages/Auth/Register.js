@@ -78,7 +78,7 @@ const Register = () => {
           },
         };
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/register",
+          `${process.env.REACT_APP_SERVER_URL}/api/user/register`,
           { email, password },
           config
         );

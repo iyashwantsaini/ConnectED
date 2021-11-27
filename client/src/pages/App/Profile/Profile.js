@@ -43,7 +43,7 @@ const Profile = () => {
           },
         };
         const { data } = await axios.post(
-          "http://localhost:5000/api/user/profile",
+          `${process.env.REACT_APP_SERVER_URL}/api/user/profile`,
           { ...userInfo, password },
           config
         );

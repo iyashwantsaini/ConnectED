@@ -17,6 +17,19 @@ const userSchema = mongoose.Schema(
       required: true,
       default: "student",
     },
+    rollnumber: {
+      type: String,
+      unique: true,
+    },
+    firstname: {
+      type: String,
+    },
+    lastname: {
+      type: String,
+    },
+    batch: {
+      type: String,
+    },
   },
   {
     timestamps: true,
