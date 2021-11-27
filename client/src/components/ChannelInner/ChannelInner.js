@@ -14,6 +14,7 @@ import OffRoundIcon from "@rsuite/icons/OffRound";
 import EditIcon from "@rsuite/icons/Edit";
 import { useDispatch } from "react-redux";
 
+import ChannelEdit from "../ChannelEdit/ChannelEdit";
 import styles from "./ChannelInner.module.css";
 import LogoutModal from "../LogoutModal/LogoutModal";
 import { USER_LOGOUT } from "../../constants/userConstants";
@@ -60,6 +61,67 @@ const TeamChannelHeader = () => {
   const { channel, watcher_count } = useChannelStateContext();
   const { client } = useChatContext();
 
+  const [editChannelOpen, setEditChannelOpen] = useState(false);
+  const [channelFormValue, setChannelFormValue] = useState({
+    channelName: channel.data.name,
+    channelDescription: channel.data.description,
+  });
+  const [selectedUsers, setSelectedUsers] = useState([client.userID || ""]);
+
+  const handleEditChannelOpen = () => {
+    setEditChannelOpen(true);
+  };
+  const handleEditChannelClose = () => {
+    setEditChannelOpen(false);
+  };
+  const channelNameChangeHandler = (e) => {
+    setChannelFormValue({
+      ...channelFormValue,
+      channelName: e.target.value,
+    });
+  };
+  const channelDescChangeHandler = (e) => {
+    setChannelFormValue({
+      ...channelFormValue,
+      channelDescription: e.target.value,
+    });
+  };
+
+  const handleNewChannelSubmission = async () => {
+    try {
+      const { channelName, channelDescription } = channelFormValue;
+      if (channelName && channelDescription) {
+        try {
+          await channel.update(
+            { name: channelName ? channelName : channel.data.name },
+            {
+              description: channelDescription
+                ? channelDescription
+                : channel.data.description,
+            }
+          );
+          if (selectedUsers.length) {
+            await channel.addMembers(selectedUsers);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+
+        setEditChannelOpen(false);
+
+        setChannelFormValue({
+          channelName: "",
+          channelDescription: "",
+        });
+        //rerender the channels
+      } else {
+        //show error message
+      }
+    } catch (error) {
+      //show error msg
+    }
+  };
+
   const MessagingHeader = () => {
     const members = Object.values(channel.state.members).filter(
       ({ user }) => user.id !== client.userID
@@ -79,8 +141,11 @@ const TeamChannelHeader = () => {
               <p
                 className={`${styles.team_channel_header__name} ${styles.user}`}
               >
-                {user.email || user.id}
+                {user.email || user.id} {"   "}
               </p>
+              <span>
+                <EditIcon onClick={handleEditChannelOpen} />
+              </span>
             </div>
           ))}
 
@@ -96,9 +161,9 @@ const TeamChannelHeader = () => {
     return (
       <div>
         <p className={`${styles.team_channel_header__name} ${styles.user}`}>
-          # {channel.data.name} {"  "}
+          # {channel.data.name} {"   "}
           <span>
-            <EditIcon />
+            <EditIcon onClick={handleEditChannelOpen} />
           </span>
         </p>
       </div>
@@ -151,6 +216,17 @@ const TeamChannelHeader = () => {
         logoutModalOpen={logoutModalOpen}
         handleLogoutClose={handleLogoutClose}
         handleLogoutSubmission={handleLogoutSubmission}
+      />
+      <ChannelEdit
+        handleNewChannelClose={handleEditChannelClose}
+        handleNewChannelSubmission={handleNewChannelSubmission}
+        channelNameChangeHandler={channelNameChangeHandler}
+        channelDescChangeHandler={channelDescChangeHandler}
+        newChannelOpen={editChannelOpen}
+        channelFormValue={channelFormValue}
+        setSelectedUsers={setSelectedUsers}
+        channelName={channel.data.name}
+        channelDescription={channel.data.description}
       />
     </div>
   );

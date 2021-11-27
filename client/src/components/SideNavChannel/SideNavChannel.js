@@ -8,7 +8,7 @@ import WavePointIcon from "@rsuite/icons/WavePoint";
 import styles from "./SideNavChannel.module.css";
 import ChannelListCustom from "../ChannelListCustom/ChannelListCustom";
 import ChannelListPreview from "../ChannelListPreview/ChannelListPreview";
-import ChannelCreateEdit from "../ChannelCreateEdit/ChannelCreateEdit";
+import ChannelCreate from "../ChannelCreate/ChannelCreate";
 
 const customChannelTeamFilter = (channels) => {
   return channels.filter((channel) => channel.type === "team");
@@ -166,7 +166,7 @@ const SideNavChannel = () => {
               </Col>
             </Row>
 
-            <br/>
+            <br />
 
             <Row>
               <Col lg={20}>
@@ -196,7 +196,7 @@ const SideNavChannel = () => {
                 </Button>
               </Col>
             </Row>
-            <ChannelCreateEdit
+            <ChannelCreate
               handleNewChannelClose={handleNewChannelClose}
               handleNewChannelSubmission={handleNewChannelSubmission}
               channelNameChangeHandler={channelNameChangeHandler}
