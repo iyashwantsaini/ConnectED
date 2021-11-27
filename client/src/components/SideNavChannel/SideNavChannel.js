@@ -25,6 +25,7 @@ const SideNavChannel = () => {
     channelDescription: "",
   });
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userType = userInfo.usertype ? userInfo.usertype : "student";
   const [channelSearchTerm, setChannelSearchTerm] = useState("");
   const [channelType, setChannelType] = useState("team");
 
@@ -157,8 +158,7 @@ const SideNavChannel = () => {
                   />
                 </Dropdown>
               </Col>
-              {(userInfo.usertype === "admin" ||
-                userInfo.usertype === "teacher") && (
+              {(userType === "admin" || userType === "teacher") && (
                 <Col>
                   <Button
                     className={styles.addButton}

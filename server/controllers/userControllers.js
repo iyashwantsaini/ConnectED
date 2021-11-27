@@ -19,9 +19,9 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   const { users } = await client.queryUsers({
-    email: "yyashwant_be18@thapar.edu",
+    email: email,
   });
-  const stream_token = serverClient.createUserToken(String(users[0].id));
+  const stream_token = serverClient.createUserToken(String(user._id));
 
   if (user && (await user.matchPassword(password))) {
     res.json({

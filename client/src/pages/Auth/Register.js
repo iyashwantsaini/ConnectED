@@ -118,6 +118,7 @@ const Register = () => {
           { email, password, rollnumber, firstname, lastname, batch },
           config
         );
+        localStorage.setItem("userInfo", JSON.stringify(data));
         dispatch(
           userActions.userRegister({
             type: USER_REGISTER_SUCCESS,
@@ -130,7 +131,6 @@ const Register = () => {
             payload: data,
           })
         );
-        localStorage.setItem("userInfo", JSON.stringify(data));
       } else {
         setErrorPresent(true);
         if (password !== repassword) {
@@ -191,7 +191,6 @@ const Register = () => {
                 class={styles.form__input}
                 placeholder="College Roll Number"
                 onChange={handleChangeRoll}
-                required
               />
             </div>
             <div class={styles.form__field}>
@@ -236,7 +235,6 @@ const Register = () => {
                 class={styles.form__input}
                 placeholder="Batch"
                 onChange={handleChangeBatch}
-                required
               />
             </div>
             <div class={styles.form__field}>
