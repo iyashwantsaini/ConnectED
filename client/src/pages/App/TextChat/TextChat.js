@@ -12,11 +12,19 @@ const client = StreamChat.getInstance(apiKey);
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 if (userInfo) {
   const streamToken = userInfo.stream_token;
+  const firstname = userInfo.firstname ? userInfo.firstname : "";
+  const lastname = userInfo.lastname ? userInfo.lastname : "";
+  const rollnumber = userInfo.rollnumber ? userInfo.rollnumber : "";
   if (streamToken) {
     client.connectUser(
       {
         id: userInfo._id,
+        name: firstname + " " + lastname + " " + rollnumber,
+        fullName: firstname + " " + lastname + " " + rollnumber,
         email: userInfo.email,
+        usertype: userInfo.usertype ? userInfo.usertype : "",
+        rollnumber: userInfo.rollnumber ? userInfo.rollnumber : "",
+        batch: userInfo.batch ? userInfo.batch : "",
       },
       streamToken
     );

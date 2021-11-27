@@ -24,6 +24,7 @@ const SideNavChannel = () => {
     channelName: "",
     channelDescription: "",
   });
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [channelSearchTerm, setChannelSearchTerm] = useState("");
   const [channelType, setChannelType] = useState("team");
 
@@ -156,14 +157,17 @@ const SideNavChannel = () => {
                   />
                 </Dropdown>
               </Col>
-              <Col>
-                <Button
-                  className={styles.addButton}
-                  onClick={handleNewChannelOpenTeam}
-                >
-                  +
-                </Button>
-              </Col>
+              {(userInfo.usertype === "admin" ||
+                userInfo.usertype === "teacher") && (
+                <Col>
+                  <Button
+                    className={styles.addButton}
+                    onClick={handleNewChannelOpenTeam}
+                  >
+                    +
+                  </Button>
+                </Col>
+              )}
             </Row>
 
             <br />

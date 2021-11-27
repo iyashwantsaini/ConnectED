@@ -18,7 +18,9 @@ const authUser = asyncHandler(async (req, res) => {
   const client = StreamChat.getInstance(api_key, api_secret);
   const user = await User.findOne({ email });
 
-  const { users } = await client.queryUsers({ email: email });
+  const { users } = await client.queryUsers({
+    email: "yyashwant_be18@thapar.edu",
+  });
   const stream_token = serverClient.createUserToken(String(users[0].id));
 
   if (user && (await user.matchPassword(password))) {
@@ -43,7 +45,7 @@ const authUser = asyncHandler(async (req, res) => {
 //@route           POST /api/users/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, rollnumber, firstname, lastname, batch } = req.body;
   const serverClient = connect(api_key, api_secret, app_id);
 
   const userExists = await User.findOne({ email });
@@ -56,6 +58,10 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     email,
     password,
+    rollnumber,
+    firstname,
+    lastname,
+    batch,
   });
 
   if (user) {

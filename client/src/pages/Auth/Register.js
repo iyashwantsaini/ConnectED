@@ -26,6 +26,10 @@ const Register = () => {
     email: "",
     password: "",
     repassword: "",
+    rollnumber: "",
+    batch: "",
+    firstname: "",
+    lastname: "",
   });
 
   useEffect(() => {
@@ -64,13 +68,45 @@ const Register = () => {
       repassword: e,
     });
   };
+  const handleChangeRoll = (e) => {
+    setUser({
+      ...user,
+      rollnumber: e,
+    });
+  };
+  const handleChangeFname = (e) => {
+    setUser({
+      ...user,
+      firstname: e,
+    });
+  };
+  const handleChangeLname = (e) => {
+    setUser({
+      ...user,
+      lastname: e,
+    });
+  };
+  const handleChangeBatch = (e) => {
+    setUser({
+      ...user,
+      batch: e,
+    });
+  };
 
   const handleSubmission = async (e) => {
     e.preventDefault();
     setErrorPresent(false);
     try {
       dispatch(userActions.userRegister({ type: USER_REGISTER_REQUEST }));
-      const { email, password, repassword } = user;
+      const {
+        email,
+        password,
+        repassword,
+        rollnumber,
+        firstname,
+        lastname,
+        batch,
+      } = user;
       if (email && password && repassword && password === repassword) {
         const config = {
           headers: {
@@ -79,7 +115,7 @@ const Register = () => {
         };
         const { data } = await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/api/user/register`,
-          { email, password },
+          { email, password, rollnumber, firstname, lastname, batch },
           config
         );
         dispatch(
@@ -140,6 +176,66 @@ const Register = () => {
                 class={styles.form__input}
                 placeholder="College Email"
                 onChange={handleChangeEmail}
+                required
+              />
+            </div>
+            <div class={styles.form__field}>
+              <label for={styles.login__username}>
+                <TagLockIcon />
+              </label>
+              <Input
+                autocomplete="rollnumber"
+                id={styles.login__username}
+                type="text"
+                name="rollnumber"
+                class={styles.form__input}
+                placeholder="College Roll Number"
+                onChange={handleChangeRoll}
+                required
+              />
+            </div>
+            <div class={styles.form__field}>
+              <label for={styles.login__username}>
+                <TagLockIcon />
+              </label>
+              <Input
+                autocomplete="firstname"
+                id={styles.login__username}
+                type="text"
+                name="firstname"
+                class={styles.form__input}
+                placeholder="First Name"
+                onChange={handleChangeFname}
+                required
+              />
+            </div>
+            <div class={styles.form__field}>
+              <label for={styles.login__username}>
+                <TagLockIcon />
+              </label>
+              <Input
+                autocomplete="lastname"
+                id={styles.login__username}
+                type="text"
+                name="lastname"
+                class={styles.form__input}
+                placeholder="Last Name"
+                onChange={handleChangeLname}
+                required
+              />
+            </div>
+            <div class={styles.form__field}>
+              <label for={styles.login__username}>
+                <TagLockIcon />
+              </label>
+              <Input
+                autocomplete="batch"
+                id={styles.login__username}
+                type="text"
+                name="batch"
+                class={styles.form__input}
+                placeholder="Batch"
+                onChange={handleChangeBatch}
                 required
               />
             </div>
