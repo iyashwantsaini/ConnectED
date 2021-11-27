@@ -7,7 +7,7 @@ require("dotenv").config();
 
 //importing custom routes
 var userRoutes = require("./routes/userRoutes.js");
-var adminRoutes = require("./routes/adminRoutes.js")
+var adminRoutes = require("./routes/adminRoutes.js");
 
 //error handling imports
 var { errorHandler, notFound } = require("./middleware/errorMiddleware.js");
