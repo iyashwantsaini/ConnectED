@@ -68,18 +68,18 @@ const TeamChannelHeader = () => {
 
     if (channel.type === "messaging") {
       return (
-        <div className={styles.team_channel_header__name_wrapper}>
+        <div>
           {members.map(({ user }, i) => (
             <div key={i} className={styles.team_channel_header__name_multi}>
               <Avatar
                 image={user.image}
-                name={user.fullName || user.id}
+                name={user.email || user.id}
                 size={32}
               />
               <p
                 className={`${styles.team_channel_header__name} ${styles.user}`}
               >
-                {user.fullName || user.id}
+                {user.email || user.id}
               </p>
             </div>
           ))}
@@ -94,16 +94,13 @@ const TeamChannelHeader = () => {
     }
 
     return (
-      <div className={styles.team_channel_header__channel_wrapper}>
-        <p className={styles.team_channel_header__name}>
-          # {channel.data.name}
+      <div>
+        <p className={`${styles.team_channel_header__name} ${styles.user}`}>
+          # {channel.data.name} {"  "}
+          <span>
+            <EditIcon />
+          </span>
         </p>
-        {/* <span style={{ display: "flex" }} onClick={() => setIsEditing(true)}>
-          <InfoRoundIcon />
-        </span> */}
-        <span style={{ display: "flex" }}>
-          <EditIcon />
-        </span>
       </div>
     );
   };
@@ -134,7 +131,9 @@ const TeamChannelHeader = () => {
   };
 
   return (
-    <div className={styles.team_channel_header__container}>
+    <div
+      className={`${styles.team_channel_header__container} ${styles.team_channel_header__channel_wrapper}`}
+    >
       <MessagingHeader />
       <div className={styles.team_channel_header__right}>
         <span className={styles.watcher_count}>
