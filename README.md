@@ -9,10 +9,12 @@
 <h4 align="center">An Internal College platform for students and teachers for easy communication and collaboration.</h4>
 <br />
 
-![one](readme/createroom.PNG)
-![two](readme/texteditor.PNG)
-![three](readme/codeeditor1.PNG)
-![four](readme/codeeditor2.PNG)
+![one](readme/login.png)
+![two](readme/one.png)
+![thread](readme/thread.png)
+![emoji](readme/emoji.png)
+![image](readme/image.png)
+![four](readme/three.png)
 
 ## 🚀 Features
 
