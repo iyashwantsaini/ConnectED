@@ -151,10 +151,10 @@ const Login = () => {
             </div>
           </form>
           <br />
-          <p class={`${styles.text__left}`}>
+          {/* <p class={`${styles.text__left}`}>
             New Member ? <Link to="/register">Register</Link>
-          </p>
-          <br />
+          </p> */}
+          {/* <br /> */}
           <Message showIcon type="error" hidden={!errorPresent}>
             {errorMessage}
           </Message>
