@@ -75,11 +75,6 @@ npm start
 - [MongoDB](https://www.mongodb.com/)
 - [Stream](https://getstream.io/chat/)
 
-## Sample Users
-- user=> yashwant@thapar.edu pass=>yashwant@thapar.edu
-- user=> yubhav@thapar.edu pass=>yubhav@thapar.edu
-- user=> shalini@thapar.edu pass=>shalini@thapar.edu
-
 ## 📌 Contributors
 
 <img src="https://avatars3.githubusercontent.com/u/21121279?s=460&u=f0450278b2b569c4443ab8ee03f9dff7015da5bf&v=4" width="100px;" alt="toofff"/><br />
